@@ -72,10 +72,13 @@ export default function Navbar({
       initial={{ y: -80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ delay: 0.3, duration: 0.8, ease: "easeOut" }}
-      className="fixed top-4 left-1/2 z-50 w-[95%] max-w-4xl -translate-x-1/2"
+      /* YAHAN FIX KIYA HAI: w-[95%] ki jagah mobile ke liye safe width lagayi hai */
+      className="fixed top-3 left-1/2 z-50 w-[calc(100%-1.5rem)] sm:w-[95%] max-w-4xl -translate-x-1/2 sm:top-4"
     >
-      <div className="glass flex items-center justify-between rounded-full px-4 py-2.5 shadow-lg shadow-black/30 sm:px-6">
-        <a href="#home" data-cursor-hover className="font-display text-lg font-bold tracking-tight text-white">
+      <div className="glass flex items-center justify-between rounded-full px-3 py-2 shadow-lg shadow-black/30 sm:px-6 sm:py-2.5">
+
+        {/* YAHAN FIX KIYA HAI: Logo par shrink-0 lagaya hai */}
+        <a href="#home" data-cursor-hover className="shrink-0 font-display text-lg font-bold tracking-tight text-white">
           MI<span className="text-cyan-400">.</span>
         </a>
 
@@ -100,17 +103,18 @@ export default function Navbar({
           ))}
         </div>
 
-        <div className="flex items-center gap-3">
-          <div className="relative">
+        {/* YAHAN FIX KIYA HAI: Buttons container par shrink-0 aur mobile gap-2 lagaya hai */}
+        <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+          <div className="relative shrink-0">
             <button
               onClick={(e) => {
                 e.stopPropagation();
                 setDropdownOpen(!dropdownOpen);
               }}
               data-cursor-hover
-              className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 p-2 sm:px-3 sm:py-1.5 font-mono text-[11px] text-slate-300 transition hover:border-cyan-400/50 hover:text-cyan-300"
+              className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 p-2 font-mono text-[11px] text-slate-300 transition hover:border-cyan-400/50 hover:text-cyan-300 sm:px-3 sm:py-1.5"
             >
-              <Palette size={12} style={{ color: themes.find(t => t.id === theme)?.color || "#06b6d4" }} />
+              <Palette size={14} style={{ color: themes.find(t => t.id === theme)?.color || "#06b6d4" }} />
               <span className="hidden sm:inline">{themes.find(t => t.id === theme)?.label || "Theme"}</span>
               <span className="hidden md:inline text-slate-500">·</span>
               <span className="hidden md:inline text-[10px] text-slate-400">{time}</span>
@@ -123,7 +127,8 @@ export default function Navbar({
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: 10, scale: 0.95 }}
                   transition={{ duration: 0.2 }}
-                  className="glass absolute right-0 mt-2 w-36 rounded-xl border border-white/10 p-1.5 shadow-xl shadow-black/40 z-50"
+                  /* YAHAN FIX KIYA HAI: origin-top-right lagaya hai taake dropdown bahar na jaye */
+                  className="glass absolute right-0 mt-2 w-36 origin-top-right rounded-xl border border-white/10 p-1.5 shadow-xl shadow-black/40 z-50"
                   onClick={(e) => e.stopPropagation()}
                 >
                   {themes.map((t) => {
@@ -155,9 +160,9 @@ export default function Navbar({
           <button
             onClick={onCommandOpen}
             data-cursor-hover
-            className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-2.5 py-1.5 text-[11px] text-slate-300 transition hover:border-cyan-400/50 hover:text-cyan-300"
+            className="flex shrink-0 items-center gap-1.5 rounded-full border border-white/10 bg-white/5 p-2 text-[11px] text-slate-300 transition hover:border-cyan-400/50 hover:text-cyan-300 sm:px-2.5 sm:py-1.5"
           >
-            <Command size={12} />
+            <Command size={14} />
             <span className="hidden sm:inline">K</span>
           </button>
         </div>
