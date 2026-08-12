@@ -109,12 +109,12 @@ export default function Navbar({
                 setDropdownOpen(!dropdownOpen);
               }}
               data-cursor-hover
-              className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-2.5 py-1.5 font-mono text-[11px] text-slate-300 transition hover:border-cyan-400/50 hover:text-cyan-300"
+              className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 p-2 sm:px-3 sm:py-1.5 font-mono text-[11px] text-slate-300 transition hover:border-cyan-400/50 hover:text-cyan-300"
             >
-              <span className="h-1.5 w-1.5 animate-pulse rounded-full" style={{ backgroundColor: themes.find(t => t.id === theme)?.color || "#06b6d4" }} />
+              <Palette size={12} style={{ color: themes.find(t => t.id === theme)?.color || "#06b6d4" }} />
               <span className="hidden sm:inline">{themes.find(t => t.id === theme)?.label || "Theme"}</span>
-              <span className="hidden sm:inline text-slate-500">·</span>
-              <span className="text-[10px] text-slate-400">{time}</span>
+              <span className="hidden md:inline text-slate-500">·</span>
+              <span className="hidden md:inline text-[10px] text-slate-400">{time}</span>
             </button>
 
             <AnimatePresence>
@@ -124,7 +124,7 @@ export default function Navbar({
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: 10, scale: 0.95 }}
                   transition={{ duration: 0.2 }}
-                  className="glass absolute right-0 mt-2 w-40 rounded-xl border border-white/10 p-1.5 shadow-xl shadow-black/40 z-50"
+                  className="glass absolute right-0 mt-2 w-36 rounded-xl border border-white/10 p-1.5 shadow-xl shadow-black/40 z-50"
                   onClick={(e) => e.stopPropagation()}
                 >
                   {themes.map((t) => {
@@ -138,7 +138,7 @@ export default function Navbar({
                           setDropdownOpen(false);
                         }}
                         data-cursor-hover
-                        className={`flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-left font-mono text-[11px] transition-colors ${
+                        className={`flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left font-mono text-[11px] transition-colors ${
                           isActive
                             ? "bg-white/10 text-white font-semibold border border-white/10"
                             : "text-slate-300 hover:bg-white/5 hover:text-white"
