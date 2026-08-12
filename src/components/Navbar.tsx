@@ -68,105 +68,106 @@ export default function Navbar({
   }, []);
 
   return (
-    <motion.nav
-      initial={{ y: -80, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ delay: 0.3, duration: 0.8, ease: "easeOut" }}
-      /* YAHAN FIX KIYA HAI: w-[95%] ki jagah mobile ke liye safe width lagayi hai */
-      className="fixed top-3 left-1/2 z-50 w-[calc(100%-1.5rem)] sm:w-[95%] max-w-4xl -translate-x-1/2 sm:top-4"
-    >
-      <div className="glass flex items-center justify-between rounded-full px-3 py-2 shadow-lg shadow-black/30 sm:px-6 sm:py-2.5">
+    <div className="fixed top-3 left-1/2 z-50 w-[calc(100%-1.5rem)] sm:w-[95%] max-w-4xl -translate-x-1/2 sm:top-4">
+      <motion.nav
+        initial={{ y: -80, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 0.3, duration: 0.8, ease: "easeOut" }}
+        className="w-full"
+      >
+        <div className="glass flex items-center justify-between rounded-full px-3 py-2 shadow-lg shadow-black/30 sm:px-6 sm:py-2.5">
 
-        {/* YAHAN FIX KIYA HAI: Logo par shrink-0 lagaya hai */}
-        <a href="#home" data-cursor-hover className="shrink-0 font-display text-lg font-bold tracking-tight text-white">
-          MI<span className="text-cyan-400">.</span>
-        </a>
+          {/* YAHAN FIX KIYA HAI: Logo par shrink-0 lagaya hai */}
+          <a href="#home" data-cursor-hover className="shrink-0 font-display text-lg font-bold tracking-tight text-white">
+            MI<span className="text-cyan-400">.</span>
+          </a>
 
-        <div className="hidden items-center gap-1 md:flex">
-          {links.map((l) => (
-            <a
-              key={l.id}
-              href={`#${l.id}`}
-              data-cursor-hover
-              className={`relative rounded-full px-3.5 py-1.5 text-xs font-medium uppercase tracking-wider transition-colors ${active === l.id ? "text-slate-950" : "text-slate-300 hover:text-white"
-                }`}
-            >
-              {active === l.id && (
-                <motion.span
-                  layoutId="nav-pill"
-                  className="absolute inset-0 rounded-full bg-gradient-to-r from-cyan-400 to-violet-500"
-                  transition={{ type: "spring", damping: 20, stiffness: 260 }}
-                />
-              )}
-              <span className="relative z-10">{l.label}</span>
-            </a>
-          ))}
-        </div>
-
-        {/* YAHAN FIX KIYA HAI: Buttons container par shrink-0 aur mobile gap-2 lagaya hai */}
-        <div className="flex shrink-0 items-center gap-2 sm:gap-3">
-          <div className="relative shrink-0">
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                setDropdownOpen(!dropdownOpen);
-              }}
-              data-cursor-hover
-              className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 p-2 font-mono text-[11px] text-slate-300 transition hover:border-cyan-400/50 hover:text-cyan-300 sm:px-3 sm:py-1.5"
-            >
-              <Palette size={14} style={{ color: themes.find(t => t.id === theme)?.color || "#06b6d4" }} />
-              <span className="hidden sm:inline">{themes.find(t => t.id === theme)?.label || "Theme"}</span>
-              <span className="hidden md:inline text-slate-500">·</span>
-              <span className="hidden md:inline text-[10px] text-slate-400">{time}</span>
-            </button>
-
-            <AnimatePresence>
-              {dropdownOpen && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                  transition={{ duration: 0.2 }}
-                  /* YAHAN FIX KIYA HAI: origin-top-right lagaya hai taake dropdown bahar na jaye */
-                  className="glass absolute right-0 mt-2 w-36 origin-top-right rounded-xl border border-white/10 p-1.5 shadow-xl shadow-black/40 z-50"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  {themes.map((t) => {
-                    const Icon = t.icon;
-                    const isActive = theme === t.id;
-                    return (
-                      <button
-                        key={t.id}
-                        onClick={() => {
-                          setTheme(t.id);
-                          setDropdownOpen(false);
-                        }}
-                        data-cursor-hover
-                        className={`flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left font-mono text-[11px] transition-colors ${isActive
-                            ? "bg-white/10 text-white font-semibold border border-white/10"
-                            : "text-slate-300 hover:bg-white/5 hover:text-white"
-                          }`}
-                      >
-                        <Icon size={12} style={{ color: t.color }} />
-                        {t.label}
-                      </button>
-                    );
-                  })}
-                </motion.div>
-              )}
-            </AnimatePresence>
+          <div className="hidden items-center gap-1 md:flex">
+            {links.map((l) => (
+              <a
+                key={l.id}
+                href={`#${l.id}`}
+                data-cursor-hover
+                className={`relative rounded-full px-3.5 py-1.5 text-xs font-medium uppercase tracking-wider transition-colors ${active === l.id ? "text-slate-950" : "text-slate-300 hover:text-white"
+                  }`}
+              >
+                {active === l.id && (
+                  <motion.span
+                    layoutId="nav-pill"
+                    className="absolute inset-0 rounded-full bg-gradient-to-r from-cyan-400 to-violet-500"
+                    transition={{ type: "spring", damping: 20, stiffness: 260 }}
+                  />
+                )}
+                <span className="relative z-10">{l.label}</span>
+              </a>
+            ))}
           </div>
 
-          <button
-            onClick={onCommandOpen}
-            data-cursor-hover
-            className="flex shrink-0 items-center gap-1.5 rounded-full border border-white/10 bg-white/5 p-2 text-[11px] text-slate-300 transition hover:border-cyan-400/50 hover:text-cyan-300 sm:px-2.5 sm:py-1.5"
-          >
-            <Command size={14} />
-            <span className="hidden sm:inline">K</span>
-          </button>
+          {/* YAHAN FIX KIYA HAI: Buttons container par shrink-0 aur mobile gap-2 lagaya hai */}
+          <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+            <div className="relative shrink-0">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setDropdownOpen(!dropdownOpen);
+                }}
+                data-cursor-hover
+                className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 p-2 font-mono text-[11px] text-slate-300 transition hover:border-cyan-400/50 hover:text-cyan-300 sm:px-3 sm:py-1.5"
+              >
+                <Palette size={14} style={{ color: themes.find(t => t.id === theme)?.color || "#06b6d4" }} />
+                <span className="hidden sm:inline">{themes.find(t => t.id === theme)?.label || "Theme"}</span>
+                <span className="hidden md:inline text-slate-500">·</span>
+                <span className="hidden md:inline text-[10px] text-slate-400">{time}</span>
+              </button>
+
+              <AnimatePresence>
+                {dropdownOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                    transition={{ duration: 0.2 }}
+                    /* YAHAN FIX KIYA HAI: origin-top-right lagaya hai taake dropdown bahar na jaye */
+                    className="glass absolute right-0 mt-2 w-36 origin-top-right rounded-xl border border-white/10 p-1.5 shadow-xl shadow-black/40 z-50"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    {themes.map((t) => {
+                      const Icon = t.icon;
+                      const isActive = theme === t.id;
+                      return (
+                        <button
+                          key={t.id}
+                          onClick={() => {
+                            setTheme(t.id);
+                            setDropdownOpen(false);
+                          }}
+                          data-cursor-hover
+                          className={`flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left font-mono text-[11px] transition-colors ${isActive
+                              ? "bg-white/10 text-white font-semibold border border-white/10"
+                              : "text-slate-300 hover:bg-white/5 hover:text-white"
+                            }`}
+                        >
+                          <Icon size={12} style={{ color: t.color }} />
+                          {t.label}
+                        </button>
+                      );
+                    })}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            <button
+              onClick={onCommandOpen}
+              data-cursor-hover
+              className="flex shrink-0 items-center gap-1.5 rounded-full border border-white/10 bg-white/5 p-2 text-[11px] text-slate-300 transition hover:border-cyan-400/50 hover:text-cyan-300 sm:px-2.5 sm:py-1.5"
+            >
+              <Command size={14} />
+              <span className="hidden sm:inline">K</span>
+            </button>
+          </div>
         </div>
-      </div>
-    </motion.nav>
+      </motion.nav>
+    </div>
   );
 }
