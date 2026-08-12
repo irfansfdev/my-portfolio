@@ -12,6 +12,9 @@ import Contact from "./components/Contact";
 
 export default function App() {
   const [commandOpen, setCommandOpen] = useState(false);
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem("portfolio-theme") || "cyberpunk";
+  });
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
@@ -25,11 +28,16 @@ export default function App() {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, []);
 
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("portfolio-theme", theme);
+  }, [theme]);
+
   return (
-    <div className="relative min-h-screen w-full bg-[#020617]">
+    <div className="relative min-h-screen w-full bg-[var(--bg)] transition-colors duration-300">
       <NoiseOverlay />
       <CustomCursor />
-      <Navbar onCommandOpen={() => setCommandOpen(true)} />
+      <Navbar theme={theme} setTheme={setTheme} onCommandOpen={() => setCommandOpen(true)} />
       <CommandMenu open={commandOpen} onClose={() => setCommandOpen(false)} />
 
       <main className="relative z-10">

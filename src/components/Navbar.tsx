@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
-import { Command } from "lucide-react"; 
+import { motion, AnimatePresence } from "framer-motion";
+import { Command, Palette, Zap, Leaf, Flame, Sparkles, Sun } from "lucide-react"; 
 
 const links = [
   { id: "home", label: "Home" },
@@ -11,7 +11,24 @@ const links = [
   { id: "contact", label: "Contact" },
 ];
 
-export default function Navbar({ onCommandOpen }: { onCommandOpen: () => void }) {
+const themes = [
+  { id: "cyberpunk", label: "Cyberpunk", icon: Zap, color: "#06b6d4" },
+  { id: "emerald", label: "Emerald", icon: Leaf, color: "#10b981" },
+  { id: "sunset", label: "Sunset", icon: Flame, color: "#f97316" },
+  { id: "lavender", label: "Lavender", icon: Sparkles, color: "#d946ef" },
+  { id: "light", label: "Light Mode", icon: Sun, color: "#2563eb" },
+];
+
+export default function Navbar({
+  theme,
+  setTheme,
+  onCommandOpen,
+}: {
+  theme: string;
+  setTheme: (theme: string) => void;
+  onCommandOpen: () => void;
+}) {
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const [time, setTime] = useState("");
   const [active, setActive] = useState("home");
 
@@ -28,6 +45,13 @@ export default function Navbar({ onCommandOpen }: { onCommandOpen: () => void })
     const t = setInterval(tick, 1000);
     return () => clearInterval(t);
   }, []);
+
+  useEffect(() => {
+    if (!dropdownOpen) return;
+    const close = () => setDropdownOpen(false);
+    window.addEventListener("click", close);
+    return () => window.removeEventListener("click", close);
+  }, [dropdownOpen]);
 
   useEffect(() => {
     const onScroll = () => {
@@ -78,9 +102,56 @@ export default function Navbar({ onCommandOpen }: { onCommandOpen: () => void })
         </div>
 
         <div className="flex items-center gap-3">
-          <div className="hidden items-center gap-1.5 font-mono text-[11px] text-slate-400 sm:flex">
-            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
-            Karachi, PK · {time}
+          <div className="relative">
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setDropdownOpen(!dropdownOpen);
+              }}
+              data-cursor-hover
+              className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-2.5 py-1.5 font-mono text-[11px] text-slate-300 transition hover:border-cyan-400/50 hover:text-cyan-300"
+            >
+              <span className="h-1.5 w-1.5 animate-pulse rounded-full" style={{ backgroundColor: themes.find(t => t.id === theme)?.color || "#06b6d4" }} />
+              <span className="hidden sm:inline">{themes.find(t => t.id === theme)?.label || "Theme"}</span>
+              <span className="hidden sm:inline text-slate-500">·</span>
+              <span className="text-[10px] text-slate-400">{time}</span>
+            </button>
+
+            <AnimatePresence>
+              {dropdownOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                  transition={{ duration: 0.2 }}
+                  className="glass absolute right-0 mt-2 w-40 rounded-xl border border-white/10 p-1.5 shadow-xl shadow-black/40 z-50"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  {themes.map((t) => {
+                    const Icon = t.icon;
+                    const isActive = theme === t.id;
+                    return (
+                      <button
+                        key={t.id}
+                        onClick={() => {
+                          setTheme(t.id);
+                          setDropdownOpen(false);
+                        }}
+                        data-cursor-hover
+                        className={`flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-left font-mono text-[11px] transition-colors ${
+                          isActive
+                            ? "bg-white/10 text-white font-semibold border border-white/10"
+                            : "text-slate-300 hover:bg-white/5 hover:text-white"
+                        }`}
+                      >
+                        <Icon size={12} style={{ color: t.color }} />
+                        {t.label}
+                      </button>
+                    );
+                  })}
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
 
           <button

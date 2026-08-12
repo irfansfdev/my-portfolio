@@ -1,9 +1,134 @@
 @import "tailwindcss";
 
-:root {
+:root, [data-theme="cyberpunk"] {
   --bg: #020617;
-  --cyan: #06b6d4;
-  --violet: #7c3aed;
+  --theme-bg-darkest: #020617;
+  --theme-bg-darker: #0b0f19;
+  --theme-bg-dark: #1e293b;
+  --theme-primary: #06b6d4;
+  --theme-primary-light: #22d3ee;
+  --theme-primary-dark: #0891b2;
+  --theme-secondary: #7c3aed;
+  --theme-secondary-light: #a78bfa;
+  --theme-secondary-dark: #6d28d9;
+  --text-white: #ffffff;
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-tertiary: #94a3b8;
+  --text-muted: #64748b;
+  --glass-bg: rgba(15, 23, 42, 0.45);
+  --glass-border: rgba(148, 163, 184, 0.12);
+  --cursor-hover-bg: rgba(124, 58, 237, 0.15);
+}
+
+[data-theme="emerald"] {
+  --bg: #050c0a;
+  --theme-bg-darkest: #030706;
+  --theme-bg-darker: #0a1612;
+  --theme-bg-dark: #102a22;
+  --theme-primary: #10b981;
+  --theme-primary-light: #34d399;
+  --theme-primary-dark: #059669;
+  --theme-secondary: #14b8a6;
+  --theme-secondary-light: #2dd4bf;
+  --theme-secondary-dark: #0d9488;
+  --text-white: #ffffff;
+  --text-primary: #f0fdf4;
+  --text-secondary: #a7f3d0;
+  --text-tertiary: #6ee7b7;
+  --text-muted: #34d399;
+  --glass-bg: rgba(10, 22, 18, 0.5);
+  --glass-border: rgba(16, 185, 129, 0.15);
+  --cursor-hover-bg: rgba(20, 184, 166, 0.15);
+}
+
+[data-theme="sunset"] {
+  --bg: #0f0705;
+  --theme-bg-darkest: #080302;
+  --theme-bg-darker: #170b07;
+  --theme-bg-dark: #2d150e;
+  --theme-primary: #f97316;
+  --theme-primary-light: #fb923c;
+  --theme-primary-dark: #ea580c;
+  --theme-secondary: #f43f5e;
+  --theme-secondary-light: #fb7185;
+  --theme-secondary-dark: #e11d48;
+  --text-white: #ffffff;
+  --text-primary: #fff7ed;
+  --text-secondary: #ffedd5;
+  --text-tertiary: #fed7aa;
+  --text-muted: #fdba74;
+  --glass-bg: rgba(23, 11, 7, 0.5);
+  --glass-border: rgba(249, 115, 22, 0.15);
+  --cursor-hover-bg: rgba(244, 63, 94, 0.15);
+}
+
+[data-theme="light"] {
+  --bg: #f8fafc;
+  --theme-bg-darkest: #cbd5e1;
+  --theme-bg-darker: #e2e8f0;
+  --theme-bg-dark: #f1f5f9;
+  --theme-primary: #2563eb;
+  --theme-primary-light: #3b82f6;
+  --theme-primary-dark: #1d4ed8;
+  --theme-secondary: #7c3aed;
+  --theme-secondary-light: #8b5cf6;
+  --theme-secondary-dark: #6d28d9;
+  --text-white: #0f172a;
+  --text-primary: #1e293b;
+  --text-secondary: #334155;
+  --text-tertiary: #475569;
+  --text-muted: #64748b;
+  --glass-bg: rgba(255, 255, 255, 0.75);
+  --glass-border: rgba(15, 23, 42, 0.08);
+  --cursor-hover-bg: rgba(37, 99, 235, 0.15);
+}
+
+[data-theme="lavender"] {
+  --bg: #120924;
+  --theme-bg-darkest: #0a0416;
+  --theme-bg-darker: #1c1035;
+  --theme-bg-dark: #2f1e51;
+  --theme-primary: #d946ef;
+  --theme-primary-light: #e879f9;
+  --theme-primary-dark: #c084fc;
+  --theme-secondary: #a855f7;
+  --theme-secondary-light: #c084fc;
+  --theme-secondary-dark: #9333ea;
+  --text-white: #ffffff;
+  --text-primary: #fdf4ff;
+  --text-secondary: #f5d0fe;
+  --text-tertiary: #e9d5ff;
+  --text-muted: #d8b4fe;
+  --glass-bg: rgba(28, 16, 53, 0.5);
+  --glass-border: rgba(217, 70, 239, 0.15);
+  --cursor-hover-bg: rgba(168, 85, 247, 0.15);
+}
+
+@theme {
+  --color-cyan-200: var(--theme-primary-light);
+  --color-cyan-300: var(--theme-primary-light);
+  --color-cyan-400: var(--theme-primary);
+  --color-cyan-500: var(--theme-primary-dark);
+  
+  --color-violet-200: var(--theme-secondary-light);
+  --color-violet-300: var(--theme-secondary-light);
+  --color-violet-400: var(--theme-secondary-light);
+  --color-violet-500: var(--theme-secondary);
+  --color-violet-600: var(--theme-secondary-dark);
+
+  --color-white: var(--text-white);
+  
+  --color-slate-50: var(--text-white);
+  --color-slate-100: var(--text-primary);
+  --color-slate-200: var(--text-primary);
+  --color-slate-300: var(--text-secondary);
+  --color-slate-400: var(--text-tertiary);
+  --color-slate-500: var(--text-muted);
+
+  --color-slate-800: var(--theme-bg-dark);
+  --color-slate-900: var(--theme-bg-darker);
+  --color-slate-950: var(--theme-bg-darkest);
 }
 
 * {
@@ -17,7 +142,7 @@ html {
 
 body {
   background: var(--bg);
-  color: #e2e8f0;
+  color: var(--text-primary);
   font-family: 'Inter', sans-serif;
   overflow-x: hidden;
   cursor: none;
@@ -41,18 +166,18 @@ body {
 }
 
 ::selection {
-  background: var(--violet);
-  color: white;
+  background: var(--theme-secondary);
+  color: var(--text-white);
 }
 
 ::-webkit-scrollbar {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #020617;
+  background: var(--bg);
 }
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(#06b6d4, #7c3aed);
+  background: linear-gradient(var(--theme-primary), var(--theme-secondary));
   border-radius: 8px;
 }
 
@@ -72,10 +197,10 @@ body {
 }
 
 .glass {
-  background: rgba(15, 23, 42, 0.45);
+  background: var(--glass-bg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(148, 163, 184, 0.12);
+  border: 1px solid var(--glass-border);
 }
 
 .magnetic-btn {
@@ -118,4 +243,16 @@ body {
 }
 .pulse-glow {
   animation: pulse-glow 2.5s ease-in-out infinite;
+}
+
+/* Smooth color transitions for theme elements */
+body, div, section, p, h1, h2, h3, span, button, a, nav, input, textarea {
+  transition-property: background-color, border-color, color, fill, stroke, box-shadow;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+/* Exclude elements that should not transition, like particle canvas or cursor dot/ring */
+.cursor-dot, .cursor-ring, canvas {
+  transition: none !important;
 }

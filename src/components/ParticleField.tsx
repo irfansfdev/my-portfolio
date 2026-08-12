@@ -70,9 +70,29 @@ export default function ParticleField() {
     window.addEventListener("mousemove", onMove);
     window.addEventListener("mouseleave", onLeave);
 
+    let lastTheme = "";
+    let baseHues = [190, 265];
+    const updateHuesForTheme = (t: string) => {
+      if (t === "emerald") baseHues = [140, 175];
+      else if (t === "sunset") baseHues = [20, 345];
+      else if (t === "lavender") baseHues = [295, 270];
+      else if (t === "light") baseHues = [220, 260];
+      else baseHues = [190, 265]; // cyberpunk / default
+    };
+
     let raf: number;
     const render = () => {
+      const currentTheme = document.documentElement.getAttribute("data-theme") || "cyberpunk";
+      if (currentTheme !== lastTheme) {
+        lastTheme = currentTheme;
+        updateHuesForTheme(currentTheme);
+        for (const p of particles) {
+          p.hue = Math.random() > 0.5 ? baseHues[0] : baseHues[1];
+        }
+      }
+
       ctx.clearRect(0, 0, width, height);
+      const isLightMode = currentTheme === "light";
       for (const p of particles) {
         const dx = p.x - mouse.current.x;
         const dy = p.y - mouse.current.y;
@@ -94,7 +114,7 @@ export default function ParticleField() {
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = `hsla(${p.hue}, 90%, 65%, 0.55)`;
+        ctx.fillStyle = `hsla(${p.hue}, 90%, ${isLightMode ? "40%" : "65%"}, ${isLightMode ? "0.35" : "0.55"})`;
         ctx.fill();
       }
       raf = requestAnimationFrame(render);

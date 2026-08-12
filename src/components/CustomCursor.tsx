@@ -45,7 +45,7 @@ export default function CustomCursor() {
           translateY: "-50%",
           width: isPointer ? 56 : 32,
           height: isPointer ? 56 : 32,
-          backgroundColor: isPointer ? "rgba(124,58,237,0.15)" : "transparent",
+          backgroundColor: isPointer ? "var(--cursor-hover-bg)" : "transparent",
           transition: "width .25s ease, height .25s ease, background-color .25s ease",
         }}
       />
