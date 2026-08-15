@@ -45,7 +45,6 @@ export default function Experience() {
   const carouselRef = useRef<HTMLDivElement>(null);
   const [scrollRange, setScrollRange] = useState(0);
   
-  // Taake pehli dafa load hone par device ka pata chal jaye
   const [isMobile, setIsMobile] = useState(() => 
     typeof window !== "undefined" ? window.innerWidth < 768 : false
   );
@@ -55,11 +54,10 @@ export default function Experience() {
       const mobile = window.innerWidth < 768;
       setIsMobile(mobile);
       
-      // Desktop ke liye dynamic calculation (koi hardcoded -78% nahi)
       if (!mobile && carouselRef.current) {
         const scrollW = carouselRef.current.scrollWidth;
         const viewportW = window.innerWidth;
-        setScrollRange(-(scrollW - viewportW + 48)); // 48 is right side padding
+        setScrollRange(-(scrollW - viewportW + 48));
       }
     };
 
@@ -70,14 +68,12 @@ export default function Experience() {
 
   const { scrollYProgress } = useScroll({ target: targetRef });
   
-  // Ab x sirf utna move hoga jitni zaroorat hai (scrollRange tak)
   const x = useTransform(scrollYProgress, [0, 1], [0, scrollRange]);
 
   return (
     <section 
       id="experience" 
       ref={targetRef} 
-      // Mobile par auto height hogi, aur Desktop par 300vh scroll ke liye
       className={`relative w-full ${isMobile ? "h-auto py-16" : "h-[300vh]"}`}
     >
       <div className={`${isMobile ? "relative block" : "sticky top-0 flex h-screen flex-col justify-center overflow-hidden"}`}>
@@ -106,7 +102,6 @@ export default function Experience() {
         {/* Horizontal Scrolling Cards */}
         <motion.div 
           ref={carouselRef}
-          // Mobile par animation off, Desktop par on
           style={isMobile ? {} : { x }} 
           className={`flex items-center gap-6 px-4 py-8 sm:px-8 ${
             isMobile 
@@ -159,7 +154,6 @@ export default function Experience() {
                     >
                       {skill}
                     </span>
-                  </div>
                   ))}
                 </div>
               </div>
