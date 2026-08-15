@@ -57,7 +57,10 @@ export default function Experience() {
       if (!mobile && carouselRef.current) {
         const scrollW = carouselRef.current.scrollWidth;
         const viewportW = window.innerWidth;
-        setScrollRange(-(scrollW - viewportW + 48));
+        const maxScroll = scrollW - viewportW + 48; // 48 is right padding
+        
+        // Agar screen boht badi hai (e.g. Ultra-wide monitor) aur cards already fit hain, tou scroll 0 rakho
+        setScrollRange(maxScroll > 0 ? -maxScroll : 0);
       }
     };
 
@@ -66,7 +69,11 @@ export default function Experience() {
     return () => window.removeEventListener("resize", updateLayout);
   }, []);
 
-  const { scrollYProgress } = useScroll({ target: targetRef });
+  // YAHAN FIX KIYA HAI: offset lagaya hai taake animation perfectly sync ho jaye
+  const { scrollYProgress } = useScroll({ 
+    target: targetRef,
+    offset: ["start start", "end end"]
+  });
   
   const x = useTransform(scrollYProgress, [0, 1], [0, scrollRange]);
 
@@ -74,7 +81,8 @@ export default function Experience() {
     <section 
       id="experience" 
       ref={targetRef} 
-      className={`relative w-full ${isMobile ? "h-auto py-16" : "h-[300vh]"}`}
+      // Yahan h-[250vh] kiya hai taake desktop par scroll speed theek rahay
+      className={`relative w-full ${isMobile ? "h-auto py-16" : "h-[250vh]"}`}
     >
       <div className={`${isMobile ? "relative block" : "sticky top-0 flex h-screen flex-col justify-center overflow-hidden"}`}>
         
@@ -115,7 +123,7 @@ export default function Experience() {
             <span className="font-mono text-5xl font-bold text-white/10">01</span>
             <h3 className="font-display mt-3 text-xl font-bold text-white">Milestones →</h3>
             <p className="mt-2 text-sm text-slate-400">
-              {isMobile ? "Swipe to travel through the internship timeline." : "Scroll to travel through the internship timeline."}
+              {isMobile ? "Swipe to travel through the internship timeline." : "Scroll down to travel through the internship timeline."}
             </p>
           </div>
 
