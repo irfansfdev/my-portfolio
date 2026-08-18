@@ -34,15 +34,15 @@ export default function App() {
   }, [theme]);
 
   return (
-    /* YAHAN FIX KIYA HAI: max-w-[100vw] aur overflow-x-hidden add kiya hai taake screen hile nahi */
-    <div className="relative min-h-screen w-full max-w-[100vw] overflow-x-hidden bg-[var(--bg)] transition-colors duration-300">
+    /* YAHAN FIX KIYA HAI: max-w-[100vw] aur overflow-x-clip add kiya hai taake screen hile nahi aur sticky scroll work kare */
+    <div className="relative min-h-screen w-full max-w-[100vw] overflow-x-clip bg-[var(--bg)] transition-colors duration-300">
       <NoiseOverlay />
       <CustomCursor />
       <Navbar theme={theme} setTheme={setTheme} onCommandOpen={() => setCommandOpen(true)} />
       <CommandMenu open={commandOpen} onClose={() => setCommandOpen(false)} />
 
-      {/* Yahan bhi safety ke liye overflow hidden lagaya hai */}
-      <main className="relative z-10 w-full overflow-x-hidden">
+      {/* Yahan bhi safety ke liye overflow clip lagaya hai taake sticky scroll blocks glitch na kare */}
+      <main className="relative z-10 w-full overflow-x-clip">
         <Hero />
         <SkillsPlayground />
         <About />
