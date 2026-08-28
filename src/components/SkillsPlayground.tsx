@@ -6,29 +6,30 @@ interface Skill {
   name: string;
   category: string;
   proficiency: number;
-  experience: string;
+  level: string;
+  isCore?: boolean;
 }
 
 const skillsData: Skill[] = [
-  { name: "React.js", category: "Front-End Frameworks", proficiency: 92, experience: "Core technology for web applications, SPA architectures, component life cycles, and state patterns." },
-  { name: "JavaScript (ES6+)", category: "Languages", proficiency: 95, experience: "Advanced DOM scripting, asynchronous event-loop patterns, modular code structures." },
-  { name: "Apex", category: "Salesforce Development", proficiency: 85, experience: "Server-side controller engineering, trigger frameworks, asynchronous processing." },
-  { name: "HTML5", category: "Web Core Technologies", proficiency: 95, experience: "Semantic content architectures, localized storage protocols, high-accessibility layouts." },
-  { name: "CSS3", category: "Web Core Technologies", proficiency: 90, experience: "Custom properties, flexbox/grid layout design, smooth GPU-accelerated transitions." },
-  { name: "Next.js", category: "Front-End Frameworks", proficiency: 88, experience: "Server-Side Rendering (SSR), static site generation, performance optimization hooks." },
-  { name: "Tailwind CSS", category: "Styling & UI Systems", proficiency: 95, experience: "Utility-first modular styling, responsive breakpoint systems, dark mode config setups." },
-  { name: "Bootstrap", category: "Styling & UI Systems", proficiency: 85, experience: "Standard grid layouts, component prototyping, custom configuration overrides." },
-  { name: "Chakra UI", category: "Styling & UI Systems", proficiency: 80, experience: "Accessible component configurations, rapid layout speeds, built-in portal helpers." },
-  { name: "React Router", category: "Web Architecture", proficiency: 90, experience: "Navigation routing architectures, client-side route guards, query-string states." },
-  { name: "DOM Manipulation", category: "Web Core Technologies", proficiency: 92, experience: "High-performance direct page element modifications, event delegate binds." },
-  { name: "Event Handling", category: "Web Core Technologies", proficiency: 95, experience: "High-performance event delegation, touchscreen swipe listeners, vector tracking." },
-  { name: "Responsive UI", category: "Design & Layout Systems", proficiency: 95, experience: "Adaptive fluid sizing, screen break grids, viewport typography structures." },
-  { name: "Salesforce", category: "Salesforce Development", proficiency: 88, experience: "CRM backend systems engineering, custom object data models, flow automated tasks." },
-  { name: "LWC", category: "Salesforce Development", proficiency: 85, experience: "Lightning Web Component architecture, shadow DOM encapsulation, secure data transfers." },
-  { name: "PHP", category: "Languages", proficiency: 75, experience: "Custom REST APIs, server-rendered layouts, basic database connectivity." },
-  { name: "Git", category: "Tools & Version Control", proficiency: 88, experience: "Branching workflows, merge protocols, codebase history management." },
-  { name: "GitHub", category: "Tools & Version Control", proficiency: 90, experience: "Workflow scripts, action pipelines, package hosting, team code reviews." },
-  { name: "Supabase", category: "Backend & Database", proficiency: 80, experience: "Serverless SQL database integration, realtime listener sockets, Row-Level Security (RLS)." },
+  { name: "React.js", category: "Front-End Frameworks", proficiency: 92, level: "Expert", isCore: true },
+  { name: "JavaScript (ES6+)", category: "Languages", proficiency: 95, level: "Expert", isCore: true },
+  { name: "Apex", category: "Salesforce Development", proficiency: 85, level: "Advanced", isCore: true },
+  { name: "HTML5", category: "Web Core Technologies", proficiency: 95, level: "Expert" },
+  { name: "CSS3", category: "Web Core Technologies", proficiency: 90, level: "Expert" },
+  { name: "Next.js", category: "Front-End Frameworks", proficiency: 88, level: "Advanced", isCore: true },
+  { name: "Tailwind CSS", category: "Styling & UI Systems", proficiency: 95, level: "Expert" },
+  { name: "Bootstrap", category: "Styling & UI Systems", proficiency: 85, level: "Advanced" },
+  { name: "Chakra UI", category: "Styling & UI Systems", proficiency: 80, level: "Intermediate" },
+  { name: "React Router", category: "Web Architecture", proficiency: 90, level: "Advanced" },
+  { name: "DOM Manipulation", category: "Web Core Technologies", proficiency: 92, level: "Expert" },
+  { name: "Event Handling", category: "Web Core Technologies", proficiency: 95, level: "Expert" },
+  { name: "Responsive UI", category: "Design & Layout Systems", proficiency: 95, level: "Expert" },
+  { name: "Salesforce", category: "Salesforce Development", proficiency: 88, level: "Advanced", isCore: true },
+  { name: "LWC", category: "Salesforce Development", proficiency: 85, level: "Advanced" },
+  { name: "PHP", category: "Languages", proficiency: 75, level: "Intermediate" },
+  { name: "Git", category: "Tools & Version Control", proficiency: 88, level: "Advanced" },
+  { name: "GitHub", category: "Tools & Version Control", proficiency: 90, level: "Advanced" },
+  { name: "Supabase", category: "Backend & Database", proficiency: 80, level: "Intermediate" },
 ];
 
 interface PhysicsNode {
@@ -70,12 +71,7 @@ function AnimatedPercentage({ value }: { value: number }) {
   return <span>{count}%</span>;
 }
 
-function getProficiencyLabel(val: number): string {
-  if (val >= 92) return "Expert Specialist";
-  if (val >= 85) return "Advanced Practitioner";
-  if (val >= 75) return "Competent Developer";
-  return "Familiar / Basic";
-}
+// Replaced label function with direct level mapping from data
 
 export default function SkillsPlayground() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -91,6 +87,7 @@ export default function SkillsPlayground() {
   const [isMobile, setIsMobile] = useState(false);
   const [initialized, setInitialized] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
+  const [hasInteracted, setHasInteracted] = useState(false);
 
   // Monitor mobile layout status
   useEffect(() => {
@@ -379,6 +376,7 @@ export default function SkillsPlayground() {
 
   // Pointer event mappings for responsive mouse & touch mechanics
   const handlePointerDown = (index: number, e: React.PointerEvent) => {
+    setHasInteracted(true);
     e.currentTarget.setPointerCapture(e.pointerId);
     
     const nodes = physicsNodesRef.current;
@@ -485,15 +483,23 @@ export default function SkillsPlayground() {
           <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" />
 
           {/* Faint status indicator tag */}
-          <div className="absolute top-4 right-5 font-mono text-[9px] text-neutral-500 flex items-center gap-1.5 pointer-events-none">
+          <div className="absolute top-4 right-5 font-mono text-[9px] text-neutral-500 flex items-center gap-1.5 pointer-events-none z-0">
             <span className="w-1.5 h-1.5 rounded-full bg-yellow-500 animate-pulse" />
             Interactive Physics Space
+          </div>
+
+          {/* Circular Drag Indicator */}
+          <div className={`absolute bottom-8 right-8 pointer-events-none transition-opacity duration-1000 z-0 ${hasInteracted ? 'opacity-0' : 'opacity-100'}`}>
+            <div className="flex items-center justify-center w-16 h-16 rounded-full border border-yellow-400/50 animate-pulse shadow-[0_0_15px_rgba(250,204,21,0.2)] bg-yellow-400/5">
+              <span className="font-mono text-[10px] font-bold tracking-widest text-yellow-400/90">DRAG</span>
+            </div>
           </div>
 
           {/* Skill Nodes render */}
           {skillsData.map((skill, index) => {
             const isSelected = selectedNodeIndex === index;
             const isDimmed = selectedNodeIndex !== null && !isSelected;
+            const sizeClass = skill.isCore ? "text-[14px] px-5 py-2.5" : "text-[11px] px-3.5 py-2";
 
             return (
               <button
@@ -512,7 +518,7 @@ export default function SkillsPlayground() {
                   top: 0,
                   willChange: "transform",
                 }}
-                className={`flex select-none items-center gap-1.5 rounded-xl px-3.5 py-2 font-mono text-[11px] font-medium outline-none transition-all duration-300 cursor-grab active:cursor-grabbing border ${
+                className={`flex select-none items-center gap-1.5 rounded-xl font-mono font-medium outline-none transition-all duration-300 cursor-grab active:cursor-grabbing border ${sizeClass} ${
                   isSelected
                     ? "bg-[#171717] border-yellow-400 text-white shadow-[0_0_20px_rgba(250,204,21,0.25)] scale-110 z-30"
                     : isDimmed
@@ -520,7 +526,7 @@ export default function SkillsPlayground() {
                     : "bg-[#111111]/85 hover:bg-[#171717] border-neutral-800 text-neutral-300 hover:text-white hover:border-yellow-400/40 hover:scale-105 hover:shadow-[0_0_12px_rgba(250,204,21,0.05)] z-20"
                 } focus-visible:ring-1 focus-visible:ring-yellow-400`}
               >
-                <span className={`w-1.5 h-1.5 rounded-full transition-colors ${isSelected ? "bg-yellow-400 animate-pulse" : "bg-neutral-700"}`} />
+                <span className={`rounded-full transition-colors ${skill.isCore ? 'w-2 h-2' : 'w-1.5 h-1.5'} ${isSelected ? "bg-yellow-400 animate-pulse" : "bg-neutral-700"}`} />
                 {skill.name}
               </button>
             );
@@ -577,15 +583,14 @@ export default function SkillsPlayground() {
                     </div>
 
                     <div>
-                      <p className="text-[9px] uppercase text-neutral-500 tracking-wider font-mono">Proficiency</p>
-                      <p className="text-xs font-semibold text-neutral-200 mt-0.5">{getProficiencyLabel(selectedSkill.proficiency)}</p>
+                      <p className="text-[9px] uppercase text-neutral-500 tracking-wider font-mono">Level</p>
+                      <p className="text-xs font-semibold text-neutral-200 mt-0.5">{selectedSkill.level}</p>
                     </div>
                   </div>
 
                   <div className="mt-3.5 border-t border-neutral-900 pt-3">
                     <p className="text-[9px] uppercase text-neutral-500 tracking-wider font-mono">Category</p>
                     <p className="text-xs text-neutral-300 font-medium mt-0.5">{selectedSkill.category}</p>
-                    <p className="text-[10px] text-neutral-400 leading-normal mt-1.5 font-sans font-normal">{selectedSkill.experience}</p>
                   </div>
                 </motion.div>
               )}
@@ -639,15 +644,14 @@ export default function SkillsPlayground() {
                   </div>
 
                   <div>
-                    <p className="text-[9px] uppercase text-neutral-500 tracking-wider font-mono">Proficiency</p>
-                    <p className="text-sm font-semibold text-neutral-200 mt-0.5">{getProficiencyLabel(selectedSkill.proficiency)}</p>
+                    <p className="text-[9px] uppercase text-neutral-500 tracking-wider font-mono">Level</p>
+                    <p className="text-sm font-semibold text-neutral-200 mt-0.5">{selectedSkill.level}</p>
                   </div>
                 </div>
 
                 <div className="mt-4 border-t border-neutral-900 pt-4">
                   <p className="text-[9px] uppercase text-neutral-500 tracking-wider font-mono">Category</p>
                   <p className="text-xs text-neutral-300 font-medium mt-0.5">{selectedSkill.category}</p>
-                  <p className="text-xs text-neutral-400 leading-normal mt-2 font-sans font-normal">{selectedSkill.experience}</p>
                 </div>
               </motion.div>
             )}
