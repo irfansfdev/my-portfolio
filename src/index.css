@@ -1,16 +1,16 @@
 @import "tailwindcss";
 
 :root, [data-theme="cyberpunk"] {
-  --bg: #020617;
-  --theme-bg-darkest: #020617;
-  --theme-bg-darker: #0b0f19;
-  --theme-bg-dark: #1e293b;
+  --bg: #030712;
+  --theme-bg-darkest: #02040a;
+  --theme-bg-darker: #080c18;
+  --theme-bg-dark: #0f172a;
   --theme-primary: #06b6d4;
   --theme-primary-light: #22d3ee;
   --theme-primary-dark: #0891b2;
-  --theme-secondary: #7c3aed;
-  --theme-secondary-light: #a78bfa;
-  --theme-secondary-dark: #6d28d9;
+  --theme-secondary: #d946ef;
+  --theme-secondary-light: #f472b6;
+  --theme-secondary-dark: #be185d;
   --text-white: #ffffff;
   --text-primary: #f8fafc;
   --text-secondary: #cbd5e1;
@@ -18,14 +18,14 @@
   --text-muted: #64748b;
   --glass-bg: rgba(15, 23, 42, 0.45);
   --glass-border: rgba(148, 163, 184, 0.12);
-  --cursor-hover-bg: rgba(124, 58, 237, 0.15);
+  --cursor-hover-bg: rgba(217, 70, 239, 0.15);
 }
 
 [data-theme="emerald"] {
-  --bg: #050c0a;
-  --theme-bg-darkest: #030706;
-  --theme-bg-darker: #0a1612;
-  --theme-bg-dark: #102a22;
+  --bg: #051a14;
+  --theme-bg-darkest: #020d0a;
+  --theme-bg-darker: #06241b;
+  --theme-bg-dark: #0a3d2e;
   --theme-primary: #10b981;
   --theme-primary-light: #34d399;
   --theme-primary-dark: #059669;
@@ -43,10 +43,10 @@
 }
 
 [data-theme="sunset"] {
-  --bg: #0f0705;
-  --theme-bg-darkest: #080302;
-  --theme-bg-darker: #170b07;
-  --theme-bg-dark: #2d150e;
+  --bg: #1a0905;
+  --theme-bg-darkest: #0f0503;
+  --theme-bg-darker: #280f08;
+  --theme-bg-dark: #42180c;
   --theme-primary: #f97316;
   --theme-primary-light: #fb923c;
   --theme-primary-dark: #ea580c;
@@ -85,10 +85,10 @@
 }
 
 [data-theme="lavender"] {
-  --bg: #120924;
-  --theme-bg-darkest: #0a0416;
-  --theme-bg-darker: #1c1035;
-  --theme-bg-dark: #2f1e51;
+  --bg: #10061e;
+  --theme-bg-darkest: #0a0314;
+  --theme-bg-darker: #1a0a30;
+  --theme-bg-dark: #2d1154;
   --theme-primary: #d946ef;
   --theme-primary-light: #e879f9;
   --theme-primary-dark: #c084fc;
@@ -103,6 +103,27 @@
   --glass-bg: rgba(28, 16, 53, 0.5);
   --glass-border: rgba(217, 70, 239, 0.15);
   --cursor-hover-bg: rgba(168, 85, 247, 0.15);
+}
+
+[data-theme="bumblebee"] {
+  --bg: #000000;
+  --theme-bg-darkest: #000000;
+  --theme-bg-darker: #0d0d0d;
+  --theme-bg-dark: #1a1a1a;
+  --theme-primary: #fbbf24;
+  --theme-primary-light: #fef08a;
+  --theme-primary-dark: #d97706;
+  --theme-secondary: #ffd700;
+  --theme-secondary-light: #fde047;
+  --theme-secondary-dark: #b45309;
+  --text-white: #ffffff;
+  --text-primary: #f8fafc;
+  --text-secondary: #e2e8f0;
+  --text-tertiary: #94a3b8;
+  --text-muted: #64748b;
+  --glass-bg: rgba(15, 15, 15, 0.6);
+  --glass-border: rgba(251, 191, 36, 0.15);
+  --cursor-hover-bg: rgba(251, 191, 36, 0.15);
 }
 
 @theme {
@@ -182,7 +203,7 @@ body {
 }
 
 .text-gradient {
-  background: linear-gradient(90deg, #06b6d4, #7c3aed, #06b6d4);
+  background: linear-gradient(90deg, var(--theme-primary), var(--theme-secondary), var(--theme-primary));
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
@@ -238,8 +259,8 @@ body {
 }
 
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 8px 2px rgba(6,182,212,0.5); }
-  50% { box-shadow: 0 0 20px 6px rgba(124,58,237,0.6); }
+  0%, 100% { box-shadow: 0 0 8px 2px var(--theme-primary); }
+  50% { box-shadow: 0 0 20px 6px var(--theme-secondary); }
 }
 .pulse-glow {
   animation: pulse-glow 2.5s ease-in-out infinite;
@@ -249,7 +270,7 @@ body {
 body, div, section, p, h1, h2, h3, span, button, a, nav, input, textarea {
   transition-property: background-color, border-color, color, fill, stroke, box-shadow;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 300ms;
+  transition-duration: 500ms;
 }
 
 /* Exclude elements that should not transition, like particle canvas or cursor dot/ring */

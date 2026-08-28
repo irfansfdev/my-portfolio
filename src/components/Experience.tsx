@@ -119,7 +119,10 @@ export default function Experience() {
         >
           
           {/* Intro Card */}
-          <div className="snap-center flex h-[320px] w-[260px] flex-shrink-0 flex-col justify-center rounded-3xl border border-cyan-400/20 bg-gradient-to-br from-cyan-500/10 to-violet-600/10 p-6 shadow-[inset_0_0_20px_rgba(34,211,238,0.05)] sm:h-[340px] sm:w-[280px]">
+          <div 
+            style={{ boxShadow: 'inset 0 0 20px color-mix(in srgb, var(--theme-primary) 10%, transparent)' }}
+            className="snap-center flex h-[320px] w-[260px] flex-shrink-0 flex-col justify-center rounded-3xl border border-cyan-400/20 bg-gradient-to-br from-cyan-500/10 to-violet-600/10 p-6 sm:h-[340px] sm:w-[280px]"
+          >
             <span className="font-mono text-5xl font-bold text-white/10">01</span>
             <h3 className="font-display mt-3 text-xl font-bold text-white">Milestones →</h3>
             <p className="mt-2 text-sm text-slate-400">

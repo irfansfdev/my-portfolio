@@ -71,13 +71,14 @@ export default function ParticleField() {
     window.addEventListener("mouseleave", onLeave);
 
     let lastTheme = "";
-    let baseHues = [190, 265];
+    let baseHues = [190, 320];
     const updateHuesForTheme = (t: string) => {
       if (t === "emerald") baseHues = [140, 175];
       else if (t === "sunset") baseHues = [20, 345];
       else if (t === "lavender") baseHues = [295, 270];
       else if (t === "light") baseHues = [220, 260];
-      else baseHues = [190, 265]; // cyberpunk / default
+      else if (t === "bumblebee") baseHues = [42, 58];
+      else baseHues = [190, 320]; // cyberpunk / default
     };
 
     let raf: number;

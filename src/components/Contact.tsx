@@ -149,7 +149,7 @@ export default function Contact() {
                 {focused === field && (
                   <motion.div
                     layoutId="laser"
-                    className="pointer-events-none absolute -inset-px rounded-xl shadow-[0_0_16px_2px_rgba(6,182,212,0.4)]"
+                    className="pointer-events-none absolute -inset-px rounded-xl shadow-[0_0_16px_2px_var(--theme-primary)]"
                   />
                 )}
               </div>
