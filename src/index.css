@@ -258,6 +258,20 @@ body {
   animation: blink 1s step-start infinite;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 @keyframes pulse-glow {
   0%, 100% { box-shadow: 0 0 8px 2px var(--theme-primary); }
   50% { box-shadow: 0 0 20px 6px var(--theme-secondary); }

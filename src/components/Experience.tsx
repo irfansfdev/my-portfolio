@@ -1,6 +1,29 @@
 import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Layers, Gauge, Zap, Route, Palette, Building2, CalendarDays, MapPin } from "lucide-react";
+import { Layers, Gauge, Zap, Route, Palette, Building2, CalendarDays, MapPin, Code2, ServerCog } from "lucide-react";
+
+const roles = [
+  {
+    id: "internship",
+    label: "Front-End Dev Internship",
+    eyebrow: "Information Technology Services",
+    location: "Karachi, PK",
+    period: "01/2026 - 03/2026",
+    icon: Building2,
+    summary: "A hands-on internship focused on responsive interfaces, performance, component systems, and production-minded front-end delivery.",
+    accent: "cyan",
+  },
+  {
+    id: "training",
+    label: "Software Development Trainee",
+    eyebrow: "Project-based training",
+    location: "Full-stack web development",
+    period: "Training experience",
+    icon: ServerCog,
+    summary: "Built and iterated on multiple full-stack web projects while practicing API integration, data modeling, authentication concepts, and responsive product UI.",
+    accent: "violet",
+  },
+] as const;
 
 const milestones = [
   {
@@ -44,6 +67,7 @@ export default function Experience() {
   const targetRef = useRef<HTMLDivElement>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
   const [scrollRange, setScrollRange] = useState(0);
+  const [activeRole, setActiveRole] = useState("internship");
   
   const [isMobile, setIsMobile] = useState(() => 
     typeof window !== "undefined" ? window.innerWidth < 768 : false
@@ -76,6 +100,7 @@ export default function Experience() {
   });
   
   const x = useTransform(scrollYProgress, [0, 1], [0, scrollRange]);
+  const role = roles.find((item) => item.id === activeRole) || roles[0];
 
   return (
     <section 
@@ -87,25 +112,45 @@ export default function Experience() {
       <div className={`${isMobile ? "relative block" : "sticky top-0 flex h-screen flex-col justify-center overflow-hidden"}`}>
         
         {/* Header Section */}
-        <div className="mb-8 px-4 sm:px-8">
+          <div className="mb-8 px-4 sm:px-8">
           <span className="font-mono text-xs uppercase tracking-[0.3em] text-cyan-400">/ 04 — Experience</span>
           <div className="mt-3 flex flex-wrap items-end justify-between gap-4">
-            <h2 className="font-display text-4xl font-bold text-white sm:text-5xl">
-              Front-End Dev <span className="text-gradient">Internship</span>
-            </h2>
-            <div className="flex flex-wrap gap-3 font-mono text-xs text-slate-400">
-              <span className="flex items-center gap-1.5 rounded-full bg-white/5 px-3 py-1.5 backdrop-blur-sm">
-                <Building2 size={13} className="text-cyan-400" /> Information Technology Services
-              </span>
-              <span className="flex items-center gap-1.5 rounded-full bg-white/5 px-3 py-1.5 backdrop-blur-sm">
-                <MapPin size={13} className="text-violet-400" /> Karachi, PK
-              </span>
-              <span className="flex items-center gap-1.5 rounded-full bg-white/5 px-3 py-1.5 backdrop-blur-sm">
-                <CalendarDays size={13} className="text-amber-400" /> 01/2026 – 03/2026
-              </span>
+              <h2 className="font-display text-4xl font-bold text-white sm:text-5xl">
+                Experience <span className="text-gradient">in motion.</span>
+              </h2>
+              <div className="flex flex-wrap gap-2 font-mono text-[10px] uppercase tracking-wider text-slate-400">
+                {roles.map((item) => (
+                  <button
+                    key={item.id}
+                    onClick={() => setActiveRole(item.id)}
+                    data-cursor-hover
+                    className={`rounded-full border px-3 py-2 transition ${activeRole === item.id ? "border-cyan-400/50 bg-cyan-400/10 text-cyan-200" : "border-white/10 bg-white/5 hover:border-white/25 hover:text-white"}`}
+                  >
+                    {item.label}
+                  </button>
+                ))}
+              </div>
             </div>
+            <motion.div
+              key={role.id}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mt-5 grid gap-3 rounded-2xl border border-white/10 bg-white/[0.04] p-4 sm:grid-cols-[1fr_auto] sm:items-center"
+            >
+              <div>
+                <div className="flex items-center gap-2 text-sm font-semibold text-white">
+                  <role.icon size={16} className={role.accent === "cyan" ? "text-cyan-400" : "text-violet-400"} />
+                  {role.label}
+                </div>
+                <p className="mt-1 max-w-2xl text-xs leading-relaxed text-slate-400">{role.summary}</p>
+              </div>
+              <div className="flex flex-wrap gap-2 font-mono text-[10px] text-slate-400 sm:justify-end">
+                <span className="flex items-center gap-1 rounded-full bg-white/5 px-2.5 py-1.5"><Building2 size={11} /> {role.eyebrow}</span>
+                <span className="flex items-center gap-1 rounded-full bg-white/5 px-2.5 py-1.5"><MapPin size={11} /> {role.location}</span>
+                <span className="flex items-center gap-1 rounded-full bg-white/5 px-2.5 py-1.5"><CalendarDays size={11} /> {role.period}</span>
+              </div>
+            </motion.div>
           </div>
-        </div>
 
         {/* Horizontal Scrolling Cards */}
         <motion.div 
@@ -173,6 +218,27 @@ export default function Experience() {
               <div className="absolute -bottom-10 -right-10 h-32 w-32 rounded-full bg-cyan-500/0 blur-2xl transition-colors duration-500 group-hover:bg-cyan-500/10" />
             </div>
           ))}
+
+          <div
+            data-cursor-hover
+            className="snap-center glass group relative flex h-[320px] w-[280px] flex-shrink-0 flex-col justify-between overflow-hidden rounded-3xl border border-violet-400/20 p-6 transition-all duration-300 hover:-translate-y-2 hover:border-violet-400/50 hover:shadow-2xl hover:shadow-violet-500/20 sm:h-[340px] sm:w-[320px]"
+          >
+            <div className="flex items-center justify-between">
+              <span className="font-mono text-sm font-semibold text-violet-300">[06]</span>
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-violet-400/10 text-violet-300 transition group-hover:rotate-6 group-hover:scale-110">
+                <Code2 size={18} />
+              </div>
+            </div>
+            <div>
+              <h3 className="font-display text-lg font-bold text-slate-200 transition group-hover:text-white sm:text-xl">Full-stack project practice</h3>
+              <p className="mt-2 text-sm leading-relaxed text-slate-400">Training across React.js, Django, Next.js, Supabase, PHP, SQL, JavaScript, and Tailwind CSS.</p>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {["React.js", "Django", "Next.js", "Supabase", "PHP", "SQL", "Tailwind"].map((skill) => (
+                  <span key={skill} className="rounded-full border border-violet-400/20 bg-violet-400/10 px-2.5 py-1 font-mono text-[10px] text-violet-200">{skill}</span>
+                ))}
+              </div>
+            </div>
+          </div>
 
           {/* Outro Card */}
           <div className="snap-center flex h-[320px] w-[260px] flex-shrink-0 flex-col items-center justify-center rounded-3xl border border-white/10 bg-white/5 p-6 text-center transition-all duration-300 hover:border-emerald-400/30 hover:bg-emerald-400/5 sm:h-[340px] sm:w-[280px]">

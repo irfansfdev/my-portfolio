@@ -128,7 +128,7 @@ export default function Hero() {
         
         {/* 2. Yahan Direct Contact ki jagah Resume laga diya gaya hai */}
         <MagneticButton
-          href="/Muhammad Irfan Resume.pdf"
+          href="/Muhammad_Irfan_Resume.pdf"
           target="_blank"
           rel="noopener noreferrer"
           dataAttr

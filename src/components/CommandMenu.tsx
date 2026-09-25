@@ -91,7 +91,7 @@ export default function CommandMenu({ open, onClose }: CommandMenuProps) {
                 </button>
               ))}
               <a
-                href="/Muhammad Irfan Resume.pdf"
+                href="/Muhammad_Irfan_Resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-left text-sm text-violet-300 transition hover:bg-white/5 hover:text-violet-200"

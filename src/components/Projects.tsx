@@ -2,6 +2,9 @@ import { motion } from "framer-motion";
 import ChickBiteSimulator from "./projects/ChickBiteSimulator";
 import EducationProject from "./projects/EducationProject";
 import MovieProject from "./projects/MovieProject";
+import MarketplaceProject from "./projects/MarketplaceProject";
+import HospitalProject from "./projects/HospitalProject";
+import PhpStoreProject from "./projects/PhpStoreProject";
 
 export default function Projects() {
   return (
@@ -12,11 +15,37 @@ export default function Projects() {
           Projects you can <span className="text-gradient">touch.</span>
         </h2>
         <p className="mx-auto mt-4 max-w-xl text-sm text-slate-400 sm:text-base">
-          No screenshots pretending to be interfaces — these are live, working simulators.
+          Interactive previews of real product ideas, systems, and the engineering decisions behind them.
         </p>
       </div>
 
-      {/* Project 1: ChickBite */}
+      {/* Project 1: Multi-vendor marketplace */}
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.7 }}
+        className="mx-auto mb-32 max-w-6xl"
+      >
+        <div className="mb-5 flex flex-wrap items-end justify-between gap-3 px-1">
+          <div><span className="font-mono text-xs uppercase tracking-[0.3em] text-cyan-400">Project 01 · Major build</span><p className="mt-2 text-sm text-slate-500">Multi-shop commerce architecture</p></div>
+          <span className="rounded-full border border-cyan-400/20 bg-cyan-400/5 px-3 py-1 font-mono text-[10px] text-cyan-200">Featured system</span>
+        </div>
+        <MarketplaceProject />
+      </motion.div>
+
+      {/* Project 2: Hospital management */}
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.7 }}
+        className="mx-auto mb-32 max-w-6xl"
+      >
+        <HospitalProject />
+      </motion.div>
+
+      {/* Existing Project 1: ChickBite */}
       <div className="mx-auto mb-32 grid max-w-6xl grid-cols-1 items-center gap-14 lg:grid-cols-2">
         <motion.div
           initial={{ opacity: 0, x: -40 }}
@@ -56,7 +85,7 @@ export default function Projects() {
         </motion.div>
       </div>
 
-      {/* Project 2: Education */}
+      {/* Existing Project 2: Education */}
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -67,7 +96,18 @@ export default function Projects() {
         <EducationProject />
       </motion.div>
 
-      {/* Project 3: Movie Engine */}
+      {/* Project 5: PHP store */}
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.7 }}
+        className="mx-auto mb-32 max-w-6xl"
+      >
+        <PhpStoreProject />
+      </motion.div>
+
+      {/* Existing Project 6: Movie Engine */}
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
