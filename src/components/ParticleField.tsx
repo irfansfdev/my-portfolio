@@ -76,7 +76,6 @@ export default function ParticleField() {
       if (t === "emerald") baseHues = [140, 175];
       else if (t === "sunset") baseHues = [20, 345];
       else if (t === "lavender") baseHues = [295, 270];
-      else if (t === "light") baseHues = [220, 260];
       else if (t === "bumblebee") baseHues = [42, 58];
       else baseHues = [190, 320]; // cyberpunk / default
     };
@@ -93,7 +92,6 @@ export default function ParticleField() {
       }
 
       ctx.clearRect(0, 0, width, height);
-      const isLightMode = currentTheme === "light";
       for (const p of particles) {
         const dx = p.x - mouse.current.x;
         const dy = p.y - mouse.current.y;
@@ -115,7 +113,7 @@ export default function ParticleField() {
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = `hsla(${p.hue}, 90%, ${isLightMode ? "40%" : "65%"}, ${isLightMode ? "0.35" : "0.55"})`;
+        ctx.fillStyle = `hsla(${p.hue}, 90%, 65%, 0.55)`;
         ctx.fill();
       }
       raf = requestAnimationFrame(render);

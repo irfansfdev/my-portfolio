@@ -14,7 +14,8 @@ import Contact from "./components/Contact";
 export default function App() {
   const [commandOpen, setCommandOpen] = useState(false);
   const [theme, setTheme] = useState(() => {
-    return localStorage.getItem("portfolio-theme") || "cyberpunk";
+    const savedTheme = localStorage.getItem("portfolio-theme");
+    return savedTheme === "light" ? "cyberpunk" : savedTheme || "cyberpunk";
   });
   const [triggerPulse, setTriggerPulse] = useState(false);
 
@@ -31,8 +32,9 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("portfolio-theme", theme);
+    const activeTheme = theme === "light" ? "cyberpunk" : theme;
+    document.documentElement.setAttribute("data-theme", activeTheme);
+    localStorage.setItem("portfolio-theme", activeTheme);
 
     // Trigger transition pulse
     setTriggerPulse(true);
