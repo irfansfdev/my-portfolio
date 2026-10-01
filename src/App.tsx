@@ -5,7 +5,7 @@ import NoiseOverlay from "./components/NoiseOverlay";
 import Navbar from "./components/Navbar";
 import CommandMenu from "./components/CommandMenu";
 import Hero from "./components/Hero";
-import SkillsPlayground from "./components/SkillsPlayground";
+import Skills from "./components/Skills";
 import About from "./components/About";
 import Experience from "./components/Experience";
 import Projects from "./components/Projects";
@@ -66,7 +66,7 @@ export default function App() {
       {/* Yahan bhi safety ke liye overflow clip lagaya hai taake sticky scroll blocks glitch na kare */}
       <main className="relative z-10 w-full overflow-x-clip">
         <Hero />
-        <SkillsPlayground />
+        <Skills />
         <About />
         <Experience />
         <Projects />

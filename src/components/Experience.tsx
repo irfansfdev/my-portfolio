@@ -1,255 +1,335 @@
-import { useRef, useState, useEffect } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { Layers, Gauge, Zap, Route, Palette, Building2, CalendarDays, MapPin, Code2, ServerCog } from "lucide-react";
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import {
+  Building2,
+  CalendarDays,
+  Check,
+  Code2,
+  Database,
+  Gauge,
+  Layers,
+  MapPin,
+  Palette,
+  Route,
+  ServerCog,
+  ShieldCheck,
+  Workflow,
+  Zap,
+  type LucideIcon,
+} from "lucide-react";
+import { cn } from "../utils/cn";
 
-const roles = [
+interface Milestone {
+  title: string;
+  description: string;
+  points: string[];
+  tools: string[];
+  icon: LucideIcon;
+}
+
+interface ExperienceRole {
+  id: string;
+  type: string;
+  title: string;
+  organization: string;
+  location: string;
+  period: string;
+  status: string;
+  summary: string;
+  icon: LucideIcon;
+  milestones: Milestone[];
+}
+
+const roles: ExperienceRole[] = [
   {
     id: "internship",
-    label: "Front-End Dev Internship",
-    eyebrow: "Information Technology Services",
-    location: "Karachi, PK",
-    period: "01/2026 - 03/2026",
+    type: "Internship",
+    title: "Front-End Developer Intern",
+    organization: "Information Technology Services",
+    location: "Karachi, Pakistan",
+    period: "Jan 2026 - Mar 2026",
+    status: "Completed",
+    summary: "Hands-on front-end experience focused on responsive interfaces, reusable UI, interaction patterns, and delivery quality.",
     icon: Building2,
-    summary: "A hands-on internship focused on responsive interfaces, performance, component systems, and production-minded front-end delivery.",
-    accent: "cyan",
+    milestones: [
+      {
+        title: "Responsive interface delivery",
+        description: "Built mobile-first interfaces designed to stay clear and usable across common screen sizes.",
+        points: ["Applied responsive layouts and breakpoints", "Created consistent page structures", "Considered accessible markup and readable content"],
+        tools: ["HTML5", "CSS3", "Bootstrap", "Tailwind CSS"],
+        icon: Layers,
+      },
+      {
+        title: "Reusable component patterns",
+        description: "Organized interface elements into reusable components and kept styling consistent across views.",
+        points: ["Separated UI into maintainable pieces", "Used shared styles and design patterns", "Refined components as requirements changed"],
+        tools: ["React.js", "Chakra UI", "CSS variables"],
+        icon: Code2,
+      },
+      {
+        title: "Interactive UI behavior",
+        description: "Added responsive interactions using browser events and front-end state patterns.",
+        points: ["Handled user input and interface events", "Connected controls to visible UI state", "Kept interaction behavior predictable"],
+        tools: ["JavaScript", "DOM", "React state"],
+        icon: Zap,
+      },
+      {
+        title: "Navigation and application flow",
+        description: "Worked with client-side navigation patterns to make multi-view experiences feel cohesive.",
+        points: ["Structured routes between application views", "Preserved familiar navigation behavior", "Practiced state-aware page transitions"],
+        tools: ["React Router", "React.js", "SPA patterns"],
+        icon: Route,
+      },
+      {
+        title: "Quality and visual consistency",
+        description: "Reviewed interface quality and refined implementation details for a more consistent finish.",
+        points: ["Checked layouts across viewport sizes", "Reviewed loading and rendering behavior", "Applied practical asset and styling improvements"],
+        tools: ["Lighthouse", "Web Vitals", "CSS"],
+        icon: Gauge,
+      },
+    ],
   },
   {
     id: "training",
-    label: "Software Development Trainee",
-    eyebrow: "Project-based training",
+    type: "Trainee",
+    title: "Software Development Trainee",
+    organization: "Project-based training",
     location: "Full-stack web development",
-    period: "Training experience",
+    period: "Project-based learning",
+    status: "Hands-on practice",
+    summary: "Developed project experience across front-end, server-side, and data workflows by building and iterating on web applications.",
     icon: ServerCog,
-    summary: "Built and iterated on multiple full-stack web projects while practicing API integration, data modeling, authentication concepts, and responsive product UI.",
-    accent: "violet",
-  },
-] as const;
-
-const milestones = [
-  {
-    tag: "[01]",
-    title: "Responsive UI Architecture",
-    desc: "Engineered fluid, mobile-first layouts ensuring pixel-perfect consistency across breakpoints.",
-    skills: ["Bootstrap", "Tailwind CSS", "HTML5"],
-    icon: Layers,
-  },
-  {
-    tag: "[02]",
-    title: "Speed & Optimization",
-    desc: "Audited and optimized rendering performance, cutting load times through smarter asset delivery.",
-    skills: ["Lighthouse", "Web Vitals", "Assets Opt"],
-    icon: Gauge,
-  },
-  {
-    tag: "[03]",
-    title: "Dynamic Event-Driven UI",
-    desc: "Built interactive modules — from event delegation to DOM state syncing — with zero framework overhead.",
-    skills: ["Vanilla JS", "DOM API", "ES6+"],
-    icon: Zap,
-  },
-  {
-    tag: "[04]",
-    title: "SPA Routing Flows",
-    desc: "Architected seamless single-page navigation flows, enabling instant view transitions without full reloads.",
-    skills: ["React Router", "React.js", "State Mgt"],
-    icon: Route,
-  },
-  {
-    tag: "[05]",
-    title: "Design System Standard",
-    desc: "Unified UI components, establishing a scalable, themeable design language across the product.",
-    skills: ["Chakra UI", "Figma", "CSS Vars"],
-    icon: Palette,
+    milestones: [
+      {
+        title: "Full-stack project builds",
+        description: "Practiced connecting interface work with server-side application structure across portfolio projects.",
+        points: ["Built project flows with front-end and backend pieces", "Worked across client and server-rendered patterns", "Iterated on working product previews"],
+        tools: ["Next.js", "React.js", "PHP", "Django"],
+        icon: Code2,
+      },
+      {
+        title: "Data-backed features",
+        description: "Explored relational data workflows and database-backed features in project environments.",
+        points: ["Practiced SQL and relational data concepts", "Connected Supabase-backed project flows", "Considered access rules and scoped data"],
+        tools: ["Supabase", "SQL", "PostgreSQL", "RLS"],
+        icon: Database,
+      },
+      {
+        title: "API and access flows",
+        description: "Built familiarity with integrating application flows, authentication concepts, and role-aware views.",
+        points: ["Worked with API-driven application patterns", "Practiced authentication and authorization concepts", "Designed role-specific views in project prototypes"],
+        tools: ["REST APIs", "Authentication", "Role-based UI"],
+        icon: ShieldCheck,
+      },
+      {
+        title: "Product workflow and iteration",
+        description: "Turned feature ideas into interactive previews, then refined the experience through focused iteration.",
+        points: ["Mapped user actions to interface states", "Practiced modular, maintainable implementation", "Used version-control workflows while iterating"],
+        tools: ["JavaScript", "Git", "GitHub", "Tailwind CSS"],
+        icon: Workflow,
+      },
+      {
+        title: "Consistent visual systems",
+        description: "Applied reusable styling decisions to keep multi-page project experiences coherent and responsive.",
+        points: ["Used shared tokens and component styles", "Adapted layouts across device sizes", "Balanced clarity with interactive detail"],
+        tools: ["CSS variables", "Responsive UI", "Design systems"],
+        icon: Palette,
+      },
+    ],
   },
 ];
 
-export default function Experience() {
-  const targetRef = useRef<HTMLDivElement>(null);
-  const carouselRef = useRef<HTMLDivElement>(null);
-  const [scrollRange, setScrollRange] = useState(0);
-  const [activeRole, setActiveRole] = useState("internship");
-  
-  const [isMobile, setIsMobile] = useState(() => 
-    typeof window !== "undefined" ? window.innerWidth < 768 : false
-  );
-
-  useEffect(() => {
-    const updateLayout = () => {
-      const mobile = window.innerWidth < 768;
-      setIsMobile(mobile);
-      
-      if (!mobile && carouselRef.current) {
-        const scrollW = carouselRef.current.scrollWidth;
-        const viewportW = window.innerWidth;
-        const maxScroll = scrollW - viewportW + 48; // 48 is right padding
-        
-        // Agar screen boht badi hai (e.g. Ultra-wide monitor) aur cards already fit hain, tou scroll 0 rakho
-        setScrollRange(maxScroll > 0 ? -maxScroll : 0);
-      }
-    };
-
-    updateLayout();
-    window.addEventListener("resize", updateLayout);
-    return () => window.removeEventListener("resize", updateLayout);
-  }, []);
-
-  // YAHAN FIX KIYA HAI: offset lagaya hai taake animation perfectly sync ho jaye
-  const { scrollYProgress } = useScroll({ 
-    target: targetRef,
-    offset: ["start start", "end end"]
-  });
-  
-  const x = useTransform(scrollYProgress, [0, 1], [0, scrollRange]);
-  const role = roles.find((item) => item.id === activeRole) || roles[0];
+function MilestoneDetails({ milestone, index }: { milestone: Milestone; index: number }) {
+  const Icon = milestone.icon;
 
   return (
-    <section 
-      id="experience" 
-      ref={targetRef} 
-      // Yahan h-[250vh] kiya hai taake desktop par scroll speed theek rahay
-      className={`relative w-full ${isMobile ? "h-auto py-16" : "h-[250vh]"}`}
+    <motion.div
+      key={`${index}-${milestone.title}`}
+      initial={{ opacity: 0, y: 14 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -10 }}
+      transition={{ duration: 0.3 }}
     >
-      <div className={`${isMobile ? "relative block" : "sticky top-0 flex h-screen flex-col justify-center overflow-hidden"}`}>
-        
-        {/* Header Section */}
-          <div className="mb-8 px-4 sm:px-8">
-          <span className="font-mono text-xs uppercase tracking-[0.3em] text-cyan-400">/ 04 — Experience</span>
-          <div className="mt-3 flex flex-wrap items-end justify-between gap-4">
-              <h2 className="font-display text-4xl font-bold text-white sm:text-5xl">
-                Experience <span className="text-gradient">in motion.</span>
-              </h2>
-              <div className="flex flex-wrap gap-2 font-mono text-[10px] uppercase tracking-wider text-slate-400">
-                {roles.map((item) => (
-                  <button
-                    key={item.id}
-                    onClick={() => setActiveRole(item.id)}
-                    data-cursor-hover
-                    className={`rounded-full border px-3 py-2 transition ${activeRole === item.id ? "border-cyan-400/50 bg-cyan-400/10 text-cyan-200" : "border-white/10 bg-white/5 hover:border-white/25 hover:text-white"}`}
-                  >
-                    {item.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-            <motion.div
-              key={role.id}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="mt-5 grid gap-3 rounded-2xl border border-white/10 bg-white/[0.04] p-4 sm:grid-cols-[1fr_auto] sm:items-center"
-            >
-              <div>
-                <div className="flex items-center gap-2 text-sm font-semibold text-white">
-                  <role.icon size={16} className={role.accent === "cyan" ? "text-cyan-400" : "text-violet-400"} />
-                  {role.label}
-                </div>
-                <p className="mt-1 max-w-2xl text-xs leading-relaxed text-slate-400">{role.summary}</p>
-              </div>
-              <div className="flex flex-wrap gap-2 font-mono text-[10px] text-slate-400 sm:justify-end">
-                <span className="flex items-center gap-1 rounded-full bg-white/5 px-2.5 py-1.5"><Building2 size={11} /> {role.eyebrow}</span>
-                <span className="flex items-center gap-1 rounded-full bg-white/5 px-2.5 py-1.5"><MapPin size={11} /> {role.location}</span>
-                <span className="flex items-center gap-1 rounded-full bg-white/5 px-2.5 py-1.5"><CalendarDays size={11} /> {role.period}</span>
-              </div>
-            </motion.div>
-          </div>
-
-        {/* Horizontal Scrolling Cards */}
-        <motion.div 
-          ref={carouselRef}
-          style={isMobile ? {} : { x }} 
-          className={`flex items-center gap-6 px-4 py-8 sm:px-8 ${
-            isMobile 
-              ? "w-full overflow-x-auto snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]" 
-              : "w-max"
-          }`}
-        >
-          
-          {/* Intro Card */}
-          <div 
-            style={{ boxShadow: 'inset 0 0 20px color-mix(in srgb, var(--theme-primary) 10%, transparent)' }}
-            className="snap-center flex h-[320px] w-[260px] flex-shrink-0 flex-col justify-center rounded-3xl border border-cyan-400/20 bg-gradient-to-br from-cyan-500/10 to-violet-600/10 p-6 sm:h-[340px] sm:w-[280px]"
+      <div className="flex items-center justify-between gap-4">
+        <span className="font-mono text-xs uppercase tracking-[0.25em] text-slate-500">Milestone / 0{index + 1}</span>
+        <span className="grid h-10 w-10 shrink-0 place-items-center border border-white/10 bg-white/[0.04]" style={{ color: "var(--theme-primary)" }}>
+          <Icon size={18} aria-hidden="true" />
+        </span>
+      </div>
+      <h4 className="font-display mt-7 text-2xl font-bold leading-tight text-white sm:text-3xl">{milestone.title}</h4>
+      <p className="mt-4 text-sm leading-relaxed text-slate-400 sm:text-base">{milestone.description}</p>
+      <ul className="mt-6 space-y-3">
+        {milestone.points.map((point) => (
+          <li key={point} className="flex gap-3 text-sm leading-relaxed text-slate-300">
+            <Check size={15} className="mt-0.5 shrink-0" style={{ color: "var(--theme-primary)" }} aria-hidden="true" />
+            <span>{point}</span>
+          </li>
+        ))}
+      </ul>
+      <div className="mt-7 flex flex-wrap gap-2">
+        {milestone.tools.map((tool) => (
+          <span
+            key={tool}
+            className="border px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.12em] text-slate-300"
+            style={{
+              borderColor: "color-mix(in srgb, var(--theme-primary) 30%, transparent)",
+              backgroundColor: "color-mix(in srgb, var(--theme-primary) 7%, transparent)",
+            }}
           >
-            <span className="font-mono text-5xl font-bold text-white/10">01</span>
-            <h3 className="font-display mt-3 text-xl font-bold text-white">Milestones →</h3>
-            <p className="mt-2 text-sm text-slate-400">
-              {isMobile ? "Swipe to travel through the internship timeline." : "Scroll down to travel through the internship timeline."}
+            {tool}
+          </span>
+        ))}
+      </div>
+    </motion.div>
+  );
+}
+
+export default function Experience() {
+  const [activeRoleId, setActiveRoleId] = useState(roles[0].id);
+  const [activeMilestone, setActiveMilestone] = useState(0);
+  const role = roles.find((item) => item.id === activeRoleId) ?? roles[0];
+  const milestone = role.milestones[activeMilestone];
+  const RoleIcon = role.icon;
+
+  return (
+    <section id="experience" className="relative py-24 md:py-36">
+      <div className="mx-auto max-w-[1500px] px-5 md:px-10">
+        <div className="mb-10 flex flex-col gap-6 md:mb-14 md:flex-row md:items-end md:justify-between">
+          <div>
+            <div className="font-mono text-xs uppercase tracking-[0.3em]" style={{ color: "var(--theme-primary)" }}>/ 04 — Experience</div>
+            <h2 className="font-display mt-4 text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">Experience in motion.</h2>
+            <p className="mt-4 max-w-2xl text-sm leading-relaxed text-slate-400 sm:text-base">
+              Internship experience and hands-on trainee projects, organized by the work and skills behind them.
             </p>
           </div>
+          <div className="flex w-full gap-2 md:w-auto" aria-label="Choose an experience">
+            {roles.map((item) => {
+              const selected = item.id === role.id;
+              return (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => {
+                    setActiveRoleId(item.id);
+                    setActiveMilestone(0);
+                  }}
+                  aria-pressed={selected}
+                  data-cursor-hover
+                  className={cn(
+                    "min-h-11 flex-1 border px-4 py-2 text-left font-mono text-[10px] uppercase tracking-[0.12em] transition-colors md:flex-none md:text-xs",
+                    selected ? "text-white" : "border-white/10 bg-white/[0.03] text-slate-400 hover:text-white",
+                  )}
+                  style={selected ? {
+                    borderColor: "color-mix(in srgb, var(--theme-primary) 60%, transparent)",
+                    backgroundColor: "color-mix(in srgb, var(--theme-primary) 12%, transparent)",
+                  } : undefined}
+                >
+                  {item.type}
+                </button>
+              );
+            })}
+          </div>
+        </div>
 
-          {/* Experience Cards */}
-          {milestones.map((m) => (
-            <div
-              key={m.tag}
-              data-cursor-hover
-              className="snap-center glass group relative flex h-[320px] w-[280px] flex-shrink-0 flex-col justify-between overflow-hidden rounded-3xl border border-white/10 p-6 transition-all duration-300 hover:-translate-y-2 hover:border-cyan-400/40 hover:shadow-2xl hover:shadow-cyan-500/20 sm:h-[340px] sm:w-[320px]"
-            >
-              {/* Top Row: Tag & Icon */}
-              <div className="flex items-center justify-between">
-                <span className="font-mono text-sm font-semibold text-slate-500 transition-colors group-hover:text-cyan-400">
-                  {m.tag}
-                </span>
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/5 text-slate-400 transition-all duration-300 group-hover:scale-110 group-hover:bg-cyan-400/10 group-hover:text-cyan-300">
-                  <m.icon size={18} />
-                </div>
-              </div>
-              
-              {/* Bottom Row: Text & Skills */}
-              <div className="relative z-10">
-                <h3 className="font-display text-lg font-bold text-slate-200 transition-colors duration-300 group-hover:text-white sm:text-xl">
-                  {m.title}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-slate-400 line-clamp-3">
-                  {m.desc}
-                </p>
-                
-                {/* Tech Stack Pills */}
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {m.skills.map((skill) => (
-                    <span 
-                      key={skill} 
-                      className="rounded-full border border-white/5 bg-white/5 px-2.5 py-1 font-mono text-[10px] text-slate-300 transition-colors group-hover:border-cyan-400/20 group-hover:bg-cyan-400/10 group-hover:text-cyan-200"
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              
-              {/* Subtle background glow on hover */}
-              <div className="absolute -bottom-10 -right-10 h-32 w-32 rounded-full bg-cyan-500/0 blur-2xl transition-colors duration-500 group-hover:bg-cyan-500/10" />
-            </div>
-          ))}
-
-          <div
-            data-cursor-hover
-            className="snap-center glass group relative flex h-[320px] w-[280px] flex-shrink-0 flex-col justify-between overflow-hidden rounded-3xl border border-violet-400/20 p-6 transition-all duration-300 hover:-translate-y-2 hover:border-violet-400/50 hover:shadow-2xl hover:shadow-violet-500/20 sm:h-[340px] sm:w-[320px]"
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={role.id}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.25 }}
+            className="border-y border-white/10 py-6 md:py-8"
           >
-            <div className="flex items-center justify-between">
-              <span className="font-mono text-sm font-semibold text-violet-300">[06]</span>
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-violet-400/10 text-violet-300 transition group-hover:rotate-6 group-hover:scale-110">
-                <Code2 size={18} />
+            <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
+              <div>
+                <div className="flex flex-wrap items-center gap-3">
+                  <RoleIcon size={18} style={{ color: "var(--theme-primary)" }} aria-hidden="true" />
+                  <h3 className="font-display text-2xl font-bold text-white sm:text-3xl">{role.title}</h3>
+                  <span
+                    className="border px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.18em]"
+                    style={{
+                      color: "var(--theme-primary)",
+                      borderColor: "color-mix(in srgb, var(--theme-primary) 35%, transparent)",
+                      backgroundColor: "color-mix(in srgb, var(--theme-primary) 8%, transparent)",
+                    }}
+                  >
+                    {role.status}
+                  </span>
+                </div>
+                <p className="mt-4 max-w-3xl text-sm leading-relaxed text-slate-400 sm:text-base">{role.summary}</p>
               </div>
+              <dl className="grid grid-cols-1 gap-4 border-t border-white/10 pt-4 text-xs sm:grid-cols-3 sm:gap-6 lg:border-0 lg:pt-0">
+                <div>
+                  <dt className="flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.18em] text-slate-500"><Building2 size={12} /> Organization</dt>
+                  <dd className="mt-1.5 text-slate-200">{role.organization}</dd>
+                </div>
+                <div>
+                  <dt className="flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.18em] text-slate-500"><MapPin size={12} /> Context</dt>
+                  <dd className="mt-1.5 text-slate-200">{role.location}</dd>
+                </div>
+                <div>
+                  <dt className="flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.18em] text-slate-500"><CalendarDays size={12} /> Period</dt>
+                  <dd className="mt-1.5 text-slate-200">{role.period}</dd>
+                </div>
+              </dl>
             </div>
-            <div>
-              <h3 className="font-display text-lg font-bold text-slate-200 transition group-hover:text-white sm:text-xl">Full-stack project practice</h3>
-              <p className="mt-2 text-sm leading-relaxed text-slate-400">Training across React.js, Django, Next.js, Supabase, PHP, SQL, JavaScript, and Tailwind CSS.</p>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {["React.js", "Django", "Next.js", "Supabase", "PHP", "SQL", "Tailwind"].map((skill) => (
-                  <span key={skill} className="rounded-full border border-violet-400/20 bg-violet-400/10 px-2.5 py-1 font-mono text-[10px] text-violet-200">{skill}</span>
+          </motion.div>
+        </AnimatePresence>
+
+        <div className="mt-10 grid gap-10 lg:mt-14 lg:grid-cols-[1fr_0.9fr] lg:gap-16">
+          <div>
+            <div className="mb-4 font-mono text-[10px] uppercase tracking-[0.25em] text-slate-500">Milestones / Select to explore</div>
+            <ol>
+              {role.milestones.map((item, index) => {
+                const selected = index === activeMilestone;
+                return (
+                  <li key={item.title} className="border-b border-white/10">
+                    <button
+                      type="button"
+                      onMouseEnter={() => setActiveMilestone(index)}
+                      onFocus={() => setActiveMilestone(index)}
+                      onClick={() => setActiveMilestone(index)}
+                      aria-pressed={selected}
+                      data-cursor-hover
+                      className={cn("group flex min-h-16 w-full items-center gap-4 py-4 text-left sm:gap-5 sm:py-5", selected ? "text-white" : "text-slate-400 hover:text-white")}
+                    >
+                      <span className="w-8 shrink-0 font-mono text-xs" style={selected ? { color: "var(--theme-primary)" } : undefined}>0{index + 1}</span>
+                      <span className="font-display min-w-0 flex-1 text-lg font-semibold leading-snug sm:text-xl">{item.title}</span>
+                      <motion.span
+                        animate={{ width: selected ? 40 : 16, backgroundColor: selected ? "var(--theme-primary)" : "rgba(255,255,255,0.22)" }}
+                        transition={{ duration: 0.25 }}
+                        className="h-px shrink-0"
+                        aria-hidden="true"
+                      />
+                    </button>
+                    {selected && (
+                      <div className="pb-6 pl-12 lg:hidden" aria-live="polite">
+                        <MilestoneDetails milestone={item} index={index} />
+                      </div>
+                    )}
+                  </li>
+                );
+              })}
+            </ol>
+          </div>
+
+          <div className="hidden lg:block">
+            <div className="sticky top-28 border border-white/10 bg-white/[0.025] p-8 xl:p-10">
+              <AnimatePresence mode="wait">
+                <MilestoneDetails key={`${role.id}-${activeMilestone}`} milestone={milestone} index={activeMilestone} />
+              </AnimatePresence>
+              <div className="mt-10 flex gap-1.5" aria-label={`Milestone ${activeMilestone + 1} of ${role.milestones.length}`}>
+                {role.milestones.map((item, index) => (
+                  <span
+                    key={item.title}
+                    className={cn("h-1 transition-all duration-300", index === activeMilestone ? "w-10" : "w-4 bg-white/15")}
+                    style={index === activeMilestone ? { backgroundColor: "var(--theme-primary)" } : undefined}
+                  />
                 ))}
               </div>
             </div>
           </div>
-
-          {/* Outro Card */}
-          <div className="snap-center flex h-[320px] w-[260px] flex-shrink-0 flex-col items-center justify-center rounded-3xl border border-white/10 bg-white/5 p-6 text-center transition-all duration-300 hover:border-emerald-400/30 hover:bg-emerald-400/5 sm:h-[340px] sm:w-[280px]">
-            <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-full bg-emerald-400/10 text-emerald-400">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-            </div>
-            <p className="font-mono text-sm font-semibold text-emerald-300">Internship Completed</p>
-            <p className="mt-2 text-xs text-slate-500">Ready for the next full-time challenge.</p>
-          </div>
-
-        </motion.div>
+        </div>
       </div>
     </section>
   );
