@@ -93,7 +93,7 @@ const roles: ExperienceRole[] = [
     id: "training",
     type: "Trainee",
     title: "Software Development Trainee",
-    organization: "Project-based training",
+    organization: "Information Technology Services",
     location: "Full-stack web development",
     period: "Project-based learning",
     status: "Hands-on practice",
