@@ -12,8 +12,8 @@ const jsonLines = [
 
 export default function About() {
   return (
-    <section id="about" className="relative w-full px-4 py-28 sm:px-8">
-      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-16 lg:grid-cols-2 lg:items-center">
+    <section id="about" className="relative w-full px-4 py-14 sm:px-8 sm:py-20 lg:py-28">
+      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-10 lg:grid-cols-2 lg:items-center lg:gap-16">
         {/* Left: Narrative */}
         <motion.div
           initial={{ opacity: 0, x: -40 }}

@@ -8,8 +8,8 @@ import PhpStoreProject from "./projects/PhpStoreProject";
 
 export default function Projects() {
   return (
-    <section id="projects" className="relative w-full px-4 py-28 sm:px-8">
-      <div className="mx-auto mb-16 max-w-3xl text-center">
+    <section id="projects" className="relative w-full px-4 py-14 sm:px-8 sm:py-20 lg:py-28">
+      <div className="mx-auto mb-10 max-w-3xl text-center sm:mb-16">
         <span className="font-mono text-xs uppercase tracking-[0.3em] text-cyan-400">/ 05 — Selected Work</span>
         <h2 className="font-display mt-3 text-4xl font-bold text-white sm:text-6xl">
           Projects you can <span className="text-gradient">touch.</span>

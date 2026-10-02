@@ -46,7 +46,7 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="relative w-full px-4 py-28 sm:px-8">
+    <section id="contact" className="relative w-full px-4 py-14 sm:px-8 sm:py-20 lg:py-28">
       <div className="pointer-events-none absolute left-1/2 top-0 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-gradient-to-br from-cyan-500/10 via-violet-600/10 to-transparent blur-[120px]" />
 
       <div className="relative z-10 mx-auto max-w-5xl">
@@ -60,7 +60,7 @@ export default function Contact() {
           </p>
         </div>
 
-        <div className="mt-16 grid grid-cols-1 gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+        <div className="mt-10 grid grid-cols-1 gap-10 sm:mt-16 lg:grid-cols-[0.9fr_1.1fr]">
           {/* Direct contact info */}
           <div className="space-y-4">
             <button

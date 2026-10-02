@@ -54,7 +54,7 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden px-4 pt-24 pb-32"
+      className="relative flex min-h-[88svh] w-full flex-col items-center justify-center overflow-hidden px-4 pt-20 pb-20 sm:min-h-screen sm:pt-24 sm:pb-32"
     >
       <ParticleField />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-slate-950/20 to-slate-950" />

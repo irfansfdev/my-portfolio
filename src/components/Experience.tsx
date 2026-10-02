@@ -19,6 +19,8 @@ import {
 } from "lucide-react";
 import { cn } from "../utils/cn";
 
+const ease = [0.22, 1, 0.36, 1] as const;
+
 interface Milestone {
   title: string;
   description: string;
@@ -32,7 +34,8 @@ interface ExperienceRole {
   type: string;
   title: string;
   organization: string;
-  location: string;
+  context: string;
+  contextLabel: string;
   period: string;
   status: string;
   summary: string;
@@ -46,7 +49,8 @@ const roles: ExperienceRole[] = [
     type: "Internship",
     title: "Front-End Developer Intern",
     organization: "Information Technology Services",
-    location: "Karachi, Pakistan",
+    context: "Karachi, Pakistan",
+    contextLabel: "Location",
     period: "Jan 2026 - Mar 2026",
     status: "Completed",
     summary: "Hands-on front-end experience focused on responsive interfaces, reusable UI, interaction patterns, and delivery quality.",
@@ -94,8 +98,9 @@ const roles: ExperienceRole[] = [
     type: "Trainee",
     title: "Software Development Trainee",
     organization: "Information Technology Services",
-    location: "Full-stack web development",
-    period: "Project-based learning",
+    context: "Full-stack web development",
+    contextLabel: "Focus",
+    period: "15 May 2026 - Present",
     status: "Hands-on practice",
     summary: "Developed project experience across front-end, server-side, and data workflows by building and iterating on web applications.",
     icon: ServerCog,
@@ -139,34 +144,28 @@ const roles: ExperienceRole[] = [
   },
 ];
 
-function MilestoneDetails({ milestone, index }: { milestone: Milestone; index: number }) {
-  const Icon = milestone.icon;
-
+function MilestoneDetails({ milestone, index, showLargeNumber = false }: { milestone: Milestone; index: number; showLargeNumber?: boolean }) {
   return (
     <motion.div
       key={`${index}-${milestone.title}`}
-      initial={{ opacity: 0, y: 14 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -10 }}
-      transition={{ duration: 0.3 }}
+      initial={{ opacity: 0, y: 18, filter: "blur(5px)" }}
+      animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+      exit={{ opacity: 0, y: -14, filter: "blur(5px)" }}
+      transition={{ duration: 0.45, ease }}
+      className="relative"
     >
-      <div className="flex items-center justify-between gap-4">
-        <span className="font-mono text-xs uppercase tracking-[0.25em] text-slate-500">Milestone / 0{index + 1}</span>
-        <span className="grid h-10 w-10 shrink-0 place-items-center border border-white/10 bg-white/[0.04]" style={{ color: "var(--theme-primary)" }}>
-          <Icon size={18} aria-hidden="true" />
-        </span>
-      </div>
-      <h4 className="font-display mt-7 text-2xl font-bold leading-tight text-white sm:text-3xl">{milestone.title}</h4>
-      <p className="mt-4 text-sm leading-relaxed text-slate-400 sm:text-base">{milestone.description}</p>
-      <ul className="mt-6 space-y-3">
+      {showLargeNumber && <div className="font-display text-[7rem] font-extrabold leading-none text-white/6">0{index + 1}</div>}
+      <h4 className={cn("font-display mt-7 text-2xl font-bold leading-tight text-white sm:text-3xl", showLargeNumber && "-mt-8")}>{milestone.title}</h4>
+      <p className={cn("text-[15px] leading-relaxed text-slate-300 sm:text-lg", showLargeNumber ? "mt-3" : "mt-5")}>{milestone.description}</p>
+      <ul className={cn("space-y-2.5", showLargeNumber ? "mt-4" : "mt-6")}>
         {milestone.points.map((point) => (
-          <li key={point} className="flex gap-3 text-sm leading-relaxed text-slate-300">
+          <li key={point} className="flex gap-3 text-sm leading-relaxed text-slate-300 sm:text-base">
             <Check size={15} className="mt-0.5 shrink-0" style={{ color: "var(--theme-primary)" }} aria-hidden="true" />
             <span>{point}</span>
           </li>
         ))}
       </ul>
-      <div className="mt-7 flex flex-wrap gap-2">
+      <div className={cn("flex flex-wrap gap-2", showLargeNumber ? "mt-5" : "mt-7")}>
         {milestone.tools.map((tool) => (
           <span
             key={tool}
@@ -192,17 +191,17 @@ export default function Experience() {
   const RoleIcon = role.icon;
 
   return (
-    <section id="experience" className="relative py-24 md:py-36">
+    <section id="experience" className="relative py-14 sm:py-20 md:py-40">
       <div className="mx-auto max-w-[1500px] px-5 md:px-10">
         <div className="mb-10 flex flex-col gap-6 md:mb-14 md:flex-row md:items-end md:justify-between">
           <div>
             <div className="font-mono text-xs uppercase tracking-[0.3em]" style={{ color: "var(--theme-primary)" }}>/ 04 — Experience</div>
             <h2 className="font-display mt-4 text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">Experience in motion.</h2>
-            <p className="mt-4 max-w-2xl text-sm leading-relaxed text-slate-400 sm:text-base">
+            <p className="mt-4 max-w-2xl text-base leading-relaxed text-slate-400 md:text-lg">
               Internship experience and hands-on trainee projects, organized by the work and skills behind them.
             </p>
           </div>
-          <div className="flex w-full gap-2 md:w-auto" aria-label="Choose an experience">
+          <div className="flex w-full gap-2 md:w-auto" role="group" aria-label="Choose an experience">
             {roles.map((item) => {
               const selected = item.id === role.id;
               return (
@@ -216,8 +215,8 @@ export default function Experience() {
                   aria-pressed={selected}
                   data-cursor-hover
                   className={cn(
-                    "min-h-11 flex-1 border px-4 py-2 text-left font-mono text-[10px] uppercase tracking-[0.12em] transition-colors md:flex-none md:text-xs",
-                    selected ? "text-white" : "border-white/10 bg-white/[0.03] text-slate-400 hover:text-white",
+                    "min-h-11 flex-1 border px-4 py-2 text-left font-mono text-[10px] uppercase tracking-[0.18em] transition-colors duration-300 md:flex-none md:text-xs",
+                    selected ? "text-white" : "border-white/10 bg-white/3 text-slate-400 hover:text-white",
                   )}
                   style={selected ? {
                     borderColor: "color-mix(in srgb, var(--theme-primary) 60%, transparent)",
@@ -237,16 +236,16 @@ export default function Experience() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.25 }}
-            className="border-y border-white/10 py-6 md:py-8"
+            transition={{ duration: 0.4, ease }}
+            className="border-y border-white/10 py-8"
           >
             <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
               <div>
                 <div className="flex flex-wrap items-center gap-3">
                   <RoleIcon size={18} style={{ color: "var(--theme-primary)" }} aria-hidden="true" />
-                  <h3 className="font-display text-2xl font-bold text-white sm:text-3xl">{role.title}</h3>
+                  <h3 className="font-display text-2xl font-bold tracking-tight text-white md:text-4xl">{role.title}</h3>
                   <span
-                    className="border px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.18em]"
+                    className="rounded-full border px-3 py-1 font-mono text-[10px] uppercase tracking-[0.2em]"
                     style={{
                       color: "var(--theme-primary)",
                       borderColor: "color-mix(in srgb, var(--theme-primary) 35%, transparent)",
@@ -256,29 +255,29 @@ export default function Experience() {
                     {role.status}
                   </span>
                 </div>
-                <p className="mt-4 max-w-3xl text-sm leading-relaxed text-slate-400 sm:text-base">{role.summary}</p>
+                <p className="mt-5 max-w-3xl text-base leading-relaxed text-slate-400 md:text-lg">{role.summary}</p>
               </div>
-              <dl className="grid grid-cols-1 gap-4 border-t border-white/10 pt-4 text-xs sm:grid-cols-3 sm:gap-6 lg:border-0 lg:pt-0">
+              <dl className="grid grid-cols-1 gap-4 border-t border-white/10 pt-5 sm:grid-cols-3 sm:gap-6 lg:w-64 lg:grid-cols-1 lg:border-0 lg:pt-0 lg:text-right">
                 <div>
-                  <dt className="flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.18em] text-slate-500"><Building2 size={12} /> Organization</dt>
-                  <dd className="mt-1.5 text-slate-200">{role.organization}</dd>
+                  <dt className="flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.18em] text-slate-500 lg:justify-end"><Building2 size={12} /> Organization</dt>
+                  <dd className="mt-1.5 wrap-break-word font-sans text-xs text-slate-200 sm:text-sm">{role.organization}</dd>
                 </div>
                 <div>
-                  <dt className="flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.18em] text-slate-500"><MapPin size={12} /> Context</dt>
-                  <dd className="mt-1.5 text-slate-200">{role.location}</dd>
+                  <dt className="flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.18em] text-slate-500 lg:justify-end"><MapPin size={12} /> {role.contextLabel}</dt>
+                  <dd className="mt-1.5 wrap-break-word font-sans text-xs text-slate-200 sm:text-sm">{role.context}</dd>
                 </div>
                 <div>
-                  <dt className="flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.18em] text-slate-500"><CalendarDays size={12} /> Period</dt>
-                  <dd className="mt-1.5 text-slate-200">{role.period}</dd>
+                  <dt className="flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.18em] text-slate-500 lg:justify-end"><CalendarDays size={12} /> Period</dt>
+                  <dd className="mt-1.5 wrap-break-word font-sans text-xs text-slate-200 sm:text-sm">{role.period}</dd>
                 </div>
               </dl>
             </div>
           </motion.div>
         </AnimatePresence>
 
-        <div className="mt-10 grid gap-10 lg:mt-14 lg:grid-cols-[1fr_0.9fr] lg:gap-16">
+        <div className="mt-16 grid gap-10 lg:grid-cols-[1fr_1fr] lg:gap-20">
           <div>
-            <div className="mb-4 font-mono text-[10px] uppercase tracking-[0.25em] text-slate-500">Milestones / Select to explore</div>
+            <div className="mb-6 font-mono text-[11px] uppercase tracking-[0.3em] text-slate-500">Milestones / Select to explore</div>
             <ol>
               {role.milestones.map((item, index) => {
                 const selected = index === activeMilestone;
@@ -291,22 +290,35 @@ export default function Experience() {
                       onClick={() => setActiveMilestone(index)}
                       aria-pressed={selected}
                       data-cursor-hover
-                      className={cn("group flex min-h-16 w-full items-center gap-4 py-4 text-left sm:gap-5 sm:py-5", selected ? "text-white" : "text-slate-400 hover:text-white")}
+                      className={cn("group flex min-h-16 w-full items-center gap-5 border-b border-white/10 py-5 text-left transition-colors md:py-6", selected ? "text-white" : "text-slate-400 hover:text-white")}
                     >
-                      <span className="w-8 shrink-0 font-mono text-xs" style={selected ? { color: "var(--theme-primary)" } : undefined}>0{index + 1}</span>
-                      <span className="font-display min-w-0 flex-1 text-lg font-semibold leading-snug sm:text-xl">{item.title}</span>
+                      <span className="shrink-0 font-mono text-xs tracking-[0.3em]" style={selected ? { color: "var(--theme-primary)" } : undefined}>0{index + 1}</span>
+                      <span className="font-display min-w-0 flex-1 text-2xl font-bold tracking-tight leading-snug md:text-3xl">
+                        <motion.span animate={{ x: selected ? 12 : 0 }} transition={{ duration: 0.5, ease }} className="inline-block">{item.title}</motion.span>
+                      </span>
                       <motion.span
-                        animate={{ width: selected ? 40 : 16, backgroundColor: selected ? "var(--theme-primary)" : "rgba(255,255,255,0.22)" }}
-                        transition={{ duration: 0.25 }}
+                        animate={{ width: selected ? 48 : 16, backgroundColor: selected ? "var(--theme-primary)" : "rgba(255,255,255,0.22)" }}
+                        transition={{ duration: 0.5, ease }}
                         className="h-px shrink-0"
                         aria-hidden="true"
                       />
                     </button>
-                    {selected && (
-                      <div className="pb-6 pl-12 lg:hidden" aria-live="polite">
-                        <MilestoneDetails milestone={item} index={index} />
-                      </div>
-                    )}
+                    <AnimatePresence initial={false}>
+                      {selected && (
+                        <motion.div
+                          key={`${role.id}-${index}`}
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.45, ease }}
+                          className="overflow-hidden lg:hidden"
+                        >
+                          <div className="pb-6 pl-10" aria-live="polite">
+                            <MilestoneDetails milestone={item} index={index} />
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </li>
                 );
               })}
@@ -314,15 +326,16 @@ export default function Experience() {
           </div>
 
           <div className="hidden lg:block">
-            <div className="sticky top-28 border border-white/10 bg-white/[0.025] p-8 xl:p-10">
+            <div className="sticky top-32 h-fit overflow-hidden border border-white/10 bg-white/2.5 p-6 xl:p-8">
+              <div className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full" style={{ background: "radial-gradient(circle, color-mix(in srgb, var(--theme-primary) 14%, transparent), transparent 65%)" }} />
               <AnimatePresence mode="wait">
-                <MilestoneDetails key={`${role.id}-${activeMilestone}`} milestone={milestone} index={activeMilestone} />
+                <MilestoneDetails key={`${role.id}-${activeMilestone}`} milestone={milestone} index={activeMilestone} showLargeNumber />
               </AnimatePresence>
-              <div className="mt-10 flex gap-1.5" aria-label={`Milestone ${activeMilestone + 1} of ${role.milestones.length}`}>
+              <div className="relative mt-6 flex items-center gap-2" aria-label={`Milestone ${activeMilestone + 1} of ${role.milestones.length}`}>
                 {role.milestones.map((item, index) => (
                   <span
                     key={item.title}
-                    className={cn("h-1 transition-all duration-300", index === activeMilestone ? "w-10" : "w-4 bg-white/15")}
+                    className={cn("h-1 transition-all duration-500", index === activeMilestone ? "w-10" : "w-4 bg-white/15")}
                     style={index === activeMilestone ? { backgroundColor: "var(--theme-primary)" } : undefined}
                   />
                 ))}

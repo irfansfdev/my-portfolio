@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+:root {
+  --font-display: "Syne", "Inter", sans-serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
 :root, [data-theme="cyberpunk"] {
   --bg: #030712;
   --theme-bg-darkest: #02040a;
@@ -143,7 +149,7 @@ html {
 body {
   background: var(--bg);
   color: var(--text-primary);
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-sans);
   overflow-x: clip;
   cursor: none;
 }
@@ -158,11 +164,11 @@ body {
 }
 
 .font-display {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--font-display);
 }
 
 .font-mono {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
 }
 
 ::selection {
