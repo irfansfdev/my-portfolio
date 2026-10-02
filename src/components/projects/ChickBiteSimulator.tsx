@@ -28,12 +28,12 @@ export default function ChickBiteSimulator() {
   );
 
   return (
-    <div className="relative mx-auto w-[280px] select-none sm:w-[300px]">
-      <div className="pointer-events-none absolute -inset-6 rounded-[3rem] bg-gradient-to-br from-orange-500/20 to-red-600/20 blur-2xl" />
+    <div className="relative mx-auto w-[250px] max-w-full select-none sm:w-[270px]">
+      <div className="pointer-events-none absolute -inset-6 rounded-[3rem] bg-linear-to-br from-orange-500/20 to-red-600/20 blur-2xl" />
       {/* Phone frame */}
       <div className="relative rounded-[2.5rem] border-4 border-slate-800 bg-slate-950 p-2 shadow-2xl shadow-black/60">
         <div className="absolute left-1/2 top-2 z-20 h-5 w-24 -translate-x-1/2 rounded-full bg-slate-950" />
-        <div className="relative h-[560px] overflow-hidden rounded-[2rem] bg-gradient-to-b from-orange-50 to-white">
+        <div className="relative h-[500px] overflow-hidden rounded-4xl bg-linear-to-b from-orange-50 to-white">
           {/* status bar */}
           <div className="flex items-center justify-between px-5 pt-3 text-[10px] font-semibold text-slate-800">
             <span>9:41</span>
