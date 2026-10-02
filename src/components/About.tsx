@@ -153,7 +153,7 @@ function ScrollMarquee() {
 
 export default function About() {
   return (
-    <section id="about" className="relative w-full overflow-hidden px-4 py-16 sm:px-8 sm:py-24 lg:py-28">
+    <section id="about" className="relative w-full overflow-hidden px-4 py-16 sm:px-8 sm:py-24 lg:py-16">
       <div
         aria-hidden
         className="pointer-events-none absolute -right-40 top-10 h-[420px] w-[420px] rounded-full bg-white/[0.04] blur-[130px]"

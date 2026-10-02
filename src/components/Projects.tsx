@@ -314,7 +314,7 @@ export default function Projects() {
   useEffect(() => () => clearTimeout(hoverTimer.current), []);
 
   return (
-    <section id="projects" className="relative w-full px-4 py-14 sm:px-8 sm:py-20 lg:py-28">
+    <section id="projects" className="relative w-full px-4 py-14 sm:px-8 sm:py-20 lg:py-16">
       <div className="mx-auto mb-9 flex max-w-[1500px] flex-col gap-5 sm:mb-12 md:flex-row md:items-end md:justify-between">
         <div>
           <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-cyan-400 sm:text-xs">/ 05 — Selected Work</span>

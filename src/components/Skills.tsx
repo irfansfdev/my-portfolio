@@ -88,7 +88,7 @@ export default function Skills() {
   const isRelated = (node: PositionedSkill) => Boolean(hovered && node.group === hovered.group);
 
   return (
-    <section id="skills" className="relative overflow-hidden py-14 sm:py-20 md:py-40">
+    <section id="skills" className="relative overflow-hidden py-14 sm:py-20 md:py-20 lg:py-16">
       <div className="mx-auto max-w-[1500px] px-5 md:px-10">
         <div className="mb-8 max-w-3xl md:mb-16">
           <div className="font-mono text-xs uppercase tracking-[0.3em] text-yellow-400">/ 02 — Toolkit</div>

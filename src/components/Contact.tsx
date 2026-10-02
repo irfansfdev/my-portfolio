@@ -46,7 +46,7 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="relative w-full px-4 py-14 sm:px-8 sm:py-20 lg:py-28">
+    <section id="contact" className="relative w-full px-4 py-14 sm:px-8 sm:py-20 lg:py-16">
       <div className="pointer-events-none absolute left-1/2 top-0 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-gradient-to-br from-cyan-500/10 via-violet-600/10 to-transparent blur-[120px]" />
 
       <div className="relative z-10 mx-auto max-w-5xl">

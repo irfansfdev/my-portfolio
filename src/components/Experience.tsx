@@ -191,7 +191,7 @@ export default function Experience() {
   const RoleIcon = role.icon;
 
   return (
-    <section id="experience" className="relative py-14 sm:py-20 md:py-40">
+    <section id="experience" className="relative py-14 sm:py-20 md:py-20 lg:py-16">
       <div className="mx-auto max-w-[1500px] px-5 md:px-10">
         <div className="mb-10 flex flex-col gap-6 md:mb-14 md:flex-row md:items-end md:justify-between">
           <div>
