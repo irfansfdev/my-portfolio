@@ -156,7 +156,7 @@ function MilestoneDetails({ milestone, index, showLargeNumber = false }: { miles
     >
       {showLargeNumber && <div className="font-display text-[7rem] font-extrabold leading-none text-white/6">0{index + 1}</div>}
       <h4 className={cn("font-display mt-7 text-2xl font-bold leading-tight text-white sm:text-3xl", showLargeNumber && "-mt-8")}>{milestone.title}</h4>
-      <p className={cn("text-[15px] leading-relaxed text-slate-300 sm:text-lg", showLargeNumber ? "mt-3" : "mt-5")}>{milestone.description}</p>
+      <p className={cn("text-base leading-relaxed text-slate-300 sm:text-[1.1875rem]", showLargeNumber ? "mt-3" : "mt-5")}>{milestone.description}</p>
       <ul className={cn("space-y-2.5", showLargeNumber ? "mt-4" : "mt-6")}>
         {milestone.points.map((point) => (
           <li key={point} className="flex gap-3 text-sm leading-relaxed text-slate-300 sm:text-base">
@@ -196,8 +196,8 @@ export default function Experience() {
         <div className="mb-10 flex flex-col gap-6 md:mb-14 md:flex-row md:items-end md:justify-between">
           <div>
             <div className="font-mono text-xs uppercase tracking-[0.3em]" style={{ color: "var(--theme-primary)" }}>/ 04 — Experience</div>
-            <h2 className="font-display mt-4 text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">Experience in motion.</h2>
-            <p className="mt-4 max-w-2xl text-base leading-relaxed text-slate-400 md:text-lg">
+            <h2 className="font-display mt-4 text-[2.5rem] font-bold tracking-tight text-white sm:text-[3.25rem] md:text-[4rem]">Experience in motion.</h2>
+              <p className="mt-4 max-w-2xl text-lg leading-relaxed text-slate-400 md:text-xl">
               Internship experience and hands-on trainee projects, organized by the work and skills behind them.
             </p>
           </div>
@@ -243,7 +243,7 @@ export default function Experience() {
               <div>
                 <div className="flex flex-wrap items-center gap-3">
                   <RoleIcon size={18} style={{ color: "var(--theme-primary)" }} aria-hidden="true" />
-                  <h3 className="font-display text-2xl font-bold tracking-tight text-white md:text-4xl">{role.title}</h3>
+                  <h3 className="font-display text-[1.625rem] font-bold tracking-tight text-white md:text-[2.5rem]">{role.title}</h3>
                   <span
                     className="rounded-full border px-3 py-1 font-mono text-[10px] uppercase tracking-[0.2em]"
                     style={{
@@ -255,7 +255,7 @@ export default function Experience() {
                     {role.status}
                   </span>
                 </div>
-                <p className="mt-5 max-w-3xl text-base leading-relaxed text-slate-400 md:text-lg">{role.summary}</p>
+                <p className="mt-5 max-w-3xl text-lg leading-relaxed text-slate-400 md:text-xl">{role.summary}</p>
               </div>
               <dl className="grid grid-cols-1 gap-4 border-t border-white/10 pt-5 sm:grid-cols-3 sm:gap-6 lg:w-64 lg:grid-cols-1 lg:border-0 lg:pt-0 lg:text-right">
                 <div>

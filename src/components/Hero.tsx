@@ -365,10 +365,10 @@ export default function Hero() {
             transition={{ delay: 0.72, duration: 0.6 }}
             className="mt-6 max-w-xl sm:mt-7"
           >
-            <p className="text-lg font-semibold leading-snug text-white sm:text-2xl">
+            <p className="text-xl font-semibold leading-snug text-white sm:text-[1.625rem]">
               Creative Front-End Developer <span style={{ color: "var(--theme-primary)" }}>&amp;</span> UI/UX Specialist
             </p>
-            <p className="mt-2 text-sm leading-relaxed text-slate-400 sm:text-base">
+            <p className="mt-2 text-base leading-relaxed text-slate-400 sm:text-lg">
               Engineering high-performance web applications.
             </p>
           </motion.div>

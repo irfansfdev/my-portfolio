@@ -12,7 +12,7 @@ const links = [
 ];
 
 const themes = [
-  { id: "cyberpunk", label: "Cyberpunk", icon: Zap, color: "#06b6d4" },
+  { id: "cyberpunk", label: "Neon", icon: Zap, color: "#06b6d4" },
   { id: "emerald", label: "Emerald", icon: Leaf, color: "#10b981" },
   { id: "sunset", label: "Sunset", icon: Flame, color: "#f97316" },
   { id: "lavender", label: "Lavender", icon: Sparkles, color: "#d946ef" },
@@ -115,7 +115,7 @@ export default function Navbar({
                 className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 p-2 font-mono text-[11px] text-slate-300 transition hover:border-cyan-400/50 hover:text-cyan-300 sm:px-3 sm:py-1.5"
               >
                 <Palette size={14} style={{ color: themes.find(t => t.id === theme)?.color || "#06b6d4" }} />
-                <span className="hidden sm:inline">{themes.find(t => t.id === theme)?.label || "Theme"}</span>
+                <span>Theme</span>
                 <span className="hidden md:inline text-slate-500">·</span>
                 <span className="hidden md:inline text-[10px] text-slate-400">{time}</span>
               </button>

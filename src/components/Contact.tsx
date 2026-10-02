@@ -52,10 +52,10 @@ export default function Contact() {
       <div className="relative z-10 mx-auto max-w-5xl">
         <div className="text-center">
           <span className="font-mono text-xs uppercase tracking-[0.3em] text-violet-400">/ 06 — Contact</span>
-          <h2 className="font-display mt-3 text-4xl font-bold text-white sm:text-6xl">
+          <h2 className="font-display mt-3 text-[2.5rem] font-bold text-white sm:text-[4rem]">
             Let's build something <span className="text-gradient">unforgettable.</span>
           </h2>
-          <p className="mx-auto mt-4 max-w-lg text-sm text-slate-400 sm:text-base">
+          <p className="mx-auto mt-4 max-w-lg text-base text-slate-400 sm:text-lg">
             Open to freelance engagements and full-time opportunities. Drop a message or reach out directly.
           </p>
         </div>

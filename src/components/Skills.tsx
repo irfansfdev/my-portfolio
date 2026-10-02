@@ -92,11 +92,11 @@ export default function Skills() {
       <div className="mx-auto max-w-[1500px] px-5 md:px-10">
         <div className="mb-8 max-w-3xl md:mb-16">
           <div className="font-mono text-xs uppercase tracking-[0.3em] text-yellow-400">/ 02 — Toolkit</div>
-          <h2 className="font-display mt-4 text-4xl font-bold tracking-tight text-white sm:text-6xl">
-            A constellation, not a list.
+          <h2 className="font-display mt-4 text-[2.5rem] font-bold tracking-tight text-white sm:text-[4rem]">
+            My full-stack toolkit.
           </h2>
-          <p className="mt-5 max-w-2xl text-sm leading-relaxed text-slate-400 sm:text-base">
-            Every node is a technology I build with. Explore the connections across my full-stack toolkit.
+          <p className="mt-5 max-w-2xl text-base leading-relaxed text-slate-400 sm:text-lg">
+            Technologies I use to build across the front end, back end, and data layer.
           </p>
         </div>
 
