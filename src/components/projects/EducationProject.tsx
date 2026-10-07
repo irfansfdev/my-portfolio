@@ -39,7 +39,7 @@ export default function EducationProject() {
       {/* Top Description */}
       <div className="relative z-10 mb-10 lg:w-4/5">
         <span className="font-mono text-xs uppercase tracking-[0.3em] text-indigo-400">Platform Simulation</span>
-        <h3 className="font-display mt-3 text-3xl font-bold text-white sm:text-4xl">GlobalEd Portal</h3>
+        <h3 className="font-display mt-3 text-3xl font-bold text-white sm:text-4xl">Global Education</h3>
         <p className="mt-4 text-sm leading-relaxed text-slate-400 sm:text-base">
           A full-stack platform empowering students to navigate international education. Select a module below to explore the dashboard's interactive capabilities in real-time.
         </p>

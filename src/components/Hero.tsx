@@ -65,7 +65,7 @@ const featuredProjects = [
   },
   {
     id: "education",
-    name: "GlobalEd Portal",
+    name: "Global Education",
     category: "Education / Product",
     headline: "Find your next\nplace to grow.",
     description: "A student portal connecting courses, funding, and opportunity.",

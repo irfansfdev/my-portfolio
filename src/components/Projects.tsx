@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState, type ComponentType } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Plus } from "lucide-react";
+import { ExternalLink, GitBranch, Plus } from "lucide-react";
 import { cn } from "../utils/cn";
 import ChickBiteSimulator from "./projects/ChickBiteSimulator";
 import EducationProject from "./projects/EducationProject";
-import MovieProject from "./projects/MovieProject";
 import MarketplaceProject from "./projects/MarketplaceProject";
 import HospitalProject from "./projects/HospitalProject";
 import PhpStoreProject from "./projects/PhpStoreProject";
+import TypingSpeedTestProject from "./projects/TypingSpeedTestProject";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -66,16 +66,49 @@ interface ProjectEntry {
   category: string;
   accent: string;
   Preview: ComponentType;
+  githubUrl: string;
+  liveUrl: string;
 }
 
 const projects: ProjectEntry[] = [
-  { id: "marketplace", title: "Multi-Vendor Marketplace", category: "Commerce / Marketplace", accent: "#06b6d4", Preview: MarketplaceProject },
-  { id: "hospital", title: "Hospital Management System", category: "Healthcare / Operations", accent: "#a78bfa", Preview: HospitalProject },
-  { id: "chickbite", title: "ChickBite", category: "Food / Commerce", accent: "#fb923c", Preview: ChickBiteShowcase },
-  { id: "education", title: "GlobalEd Portal", category: "Education / Platform", accent: "#818cf8", Preview: EducationProject },
-  { id: "php-store", title: "PHP E-Commerce Website", category: "Commerce / PHP + SQL", accent: "#fbbf24", Preview: PhpStoreProject },
-  { id: "movie-engine", title: "Movie Recommendation Engine", category: "Discovery / Data", accent: "#34d399", Preview: MovieProject },
+  { id: "marketplace", title: "Multi-Vendor Marketplace", category: "Commerce / Marketplace", accent: "#06b6d4", Preview: MarketplaceProject, githubUrl: "https://github.com/irfansfdev/Vendors-E-commerce", liveUrl: "" },
+  { id: "hospital", title: "Hospital Management System", category: "Healthcare / Operations", accent: "#a78bfa", Preview: HospitalProject, githubUrl: "https://github.com/irfansfdev/Hospital-Management-System", liveUrl: "https://irfan-hospital-management-system.vercel.app/" },
+  { id: "chickbite", title: "ChickBite", category: "Food / Commerce", accent: "#fb923c", Preview: ChickBiteShowcase, githubUrl: "https://github.com/irfansfdev/FoodWeb", liveUrl: "https://chick-bite.vercel.app/" },
+  { id: "education", title: "Global Education", category: "Education / Platform", accent: "#818cf8", Preview: EducationProject, githubUrl: "", liveUrl: "" },
+  { id: "php-store", title: "PHP E-Commerce Website", category: "Commerce / PHP + SQL", accent: "#fbbf24", Preview: PhpStoreProject, githubUrl: "https://github.com/irfansfdev/Ecommerce-PHP", liveUrl: "https://irfan-php-domain.infy.click/" },
+  { id: "typing-speed-test", title: "Typing Speed Test", category: "Productivity / Next.js", accent: "#a78bfa", Preview: TypingSpeedTestProject, githubUrl: "https://github.com/irfansfdev/Typing-Speed-Test", liveUrl: "https://typing-speed-test-muhammad-irfan1.vercel.app/" },
 ];
+
+function ProjectLinks({ project }: { project: ProjectEntry }) {
+  const links = [
+    { label: "View on GitHub", url: project.githubUrl, Icon: GitBranch },
+    { label: "Live Preview", url: project.liveUrl, Icon: ExternalLink },
+  ].filter(({ url }) => url);
+
+  if (links.length === 0) return null;
+
+  return (
+    <div className="mt-6 flex flex-wrap gap-3 border-t border-white/10 pt-4">
+      {links.map(({ label, url, Icon }) => (
+        <a
+          key={label}
+          href={url}
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex items-center gap-2 rounded-lg border-2 px-4 py-2.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-white shadow-lg transition duration-200 hover:-translate-y-0.5 hover:brightness-125"
+          style={{
+            borderColor: `${project.accent}bb`,
+            backgroundColor: `${project.accent}26`,
+            boxShadow: `0 4px 18px ${project.accent}20`,
+          }}
+        >
+          <Icon size={15} />
+          {label}
+        </a>
+      ))}
+    </div>
+  );
+}
 
 function useIsDesktop() {
   const [desktop, setDesktop] = useState(false);
@@ -227,6 +260,7 @@ function DesktopPanel({
               className="min-h-0 flex-1 overflow-y-auto border-t border-white/10 p-3 sm:p-5"
             >
               <Preview />
+              <ProjectLinks project={project} />
             </motion.div>
           </motion.div>
         )}
@@ -290,6 +324,7 @@ function MobileProject({
                 transition={{ duration: 0.6, delay: 0.2, ease }}
               >
                 <Preview />
+                <ProjectLinks project={project} />
               </motion.div>
             </div>
           </motion.div>
