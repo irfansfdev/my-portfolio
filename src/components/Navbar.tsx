@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Command, Palette, Zap, Leaf, Flame, Sparkles, Moon } from "lucide-react";
+import { Command, Palette, Zap, Leaf, Flame, Flower2, Moon } from "lucide-react";
 
 const links = [
   { id: "home", label: "Home" },
@@ -15,7 +15,7 @@ const themes = [
   { id: "cyberpunk", label: "Neon", icon: Zap, color: "#06b6d4" },
   { id: "emerald", label: "Emerald", icon: Leaf, color: "#10b981" },
   { id: "sunset", label: "Sunset", icon: Flame, color: "#f97316" },
-  { id: "lavender", label: "Lavender", icon: Sparkles, color: "#d946ef" },
+  { id: "lavender", label: "Lavender", icon: Flower2, color: "#d946ef" },
   { id: "bumblebee", label: "Bumblebee", icon: Moon, color: "#fbbf24" },
 ];
 

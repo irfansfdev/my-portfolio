@@ -124,7 +124,7 @@ function ScrollMarquee() {
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const xLeft = useTransform(scrollYProgress, [0, 1], ["0%", "-15%"]);
   const xRight = useTransform(scrollYProgress, [0, 1], ["-15%", "0%"]);
-  const text = "FULL STACK DEVELOPER  ✦  UI ENGINEER  ✦  PROBLEM SOLVER  ✦  ";
+  const text = "FULL STACK DEVELOPER  /  UI ENGINEER  /  PROBLEM SOLVER  /  ";
 
   return (
     <div

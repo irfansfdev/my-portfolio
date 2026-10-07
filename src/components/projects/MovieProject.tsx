@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { Film, Sparkles } from "lucide-react";
+import { Activity, Film } from "lucide-react";
 
 const genres = ["Action", "Sci-Fi", "Drama", "Comedy", "Thriller", "Romance", "Horror"];
 
@@ -71,7 +71,7 @@ export default function MovieProject() {
 
         <div className="relative rounded-2xl border border-emerald-400/20 bg-slate-950/60 p-5 font-mono">
           <div className="mb-4 flex items-center gap-2 text-emerald-400">
-            <Sparkles size={14} />
+            <Activity size={14} />
             <span className="text-xs uppercase tracking-widest">Live Inference Output</span>
           </div>
           <div className="space-y-2.5">
