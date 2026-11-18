@@ -1,6 +1,8 @@
 import { AnimatePresence, motion, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
-import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, BookOpen, Film, FileText, FolderKanban, Globe, Mail, Phone, ShoppingBag } from "lucide-react";
+import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, BookOpen, Film, FileText, FolderKanban, Mail, Phone, ShoppingBag } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import OrbitStack from "./OrbitStack";
+import GithubIcon from "./icons/GithubIcon";
 import LinkedinIcon from "./icons/LinkedinIcon";
 
 function MagneticButton({
@@ -26,10 +28,14 @@ function MagneticButton({
     const rect = el.getBoundingClientRect();
     const x = e.clientX - rect.left - rect.width / 2;
     const y = e.clientY - rect.top - rect.height / 2;
-    el.style.transform = `translate(${x * 0.35}px, ${y * 0.35}px)`;
+    el.style.setProperty("--magnetic-x", `${x * 0.35}px`);
+    el.style.setProperty("--magnetic-y", `${y * 0.35}px`);
   };
   const reset = () => {
-    if (ref.current) ref.current.style.transform = "translate(0,0)";
+    if (ref.current) {
+      ref.current.style.setProperty("--magnetic-x", "0px");
+      ref.current.style.setProperty("--magnetic-y", "0px");
+    }
   };
 
   return (
@@ -287,102 +293,109 @@ export default function Hero() {
   const shouldReduceMotion = useReducedMotion();
   const firstName = "MUHAMMAD";
   const lastName = "IRFAN";
-  const letterVariants = {
-    hidden: { opacity: 0, y: "110%", rotate: 8 },
-    visible: (index: number) => ({
-      opacity: 1,
-      y: "0%",
-      rotate: 0,
-      transition: { delay: shouldReduceMotion ? 0 : 0.24 + index * 0.035, duration: shouldReduceMotion ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] as const },
-    }),
-  };
+  const entrance = (delay: number) => ({
+    initial: shouldReduceMotion ? false : { opacity: 0, y: 16 },
+    animate: { opacity: 1, y: 0 },
+    transition: {
+      delay: shouldReduceMotion ? 0 : delay,
+      duration: shouldReduceMotion ? 0 : 0.6,
+      ease: [0.22, 1, 0.36, 1] as const,
+    },
+  });
 
   return (
     <section
       id="home"
-      className="relative isolate flex min-h-[88svh] w-full items-center overflow-hidden px-5 pb-16 pt-28 sm:px-8 md:min-h-screen md:px-10 md:pb-24 md:pt-32"
+      className="hero-section relative isolate flex min-h-[100svh] w-full items-center overflow-visible px-5 pb-16 pt-[104px] sm:px-8 sm:pt-[108px] md:px-10 md:pb-24 md:pt-[108px]"
     >
-      <div className="pointer-events-none absolute inset-0 -z-10 opacity-25" style={{ backgroundImage: "linear-gradient(to right, color-mix(in srgb, var(--theme-primary) 12%, transparent) 1px, transparent 1px), linear-gradient(to bottom, color-mix(in srgb, var(--theme-primary) 12%, transparent) 1px, transparent 1px)", backgroundSize: "72px 72px", maskImage: "linear-gradient(to bottom, black, transparent 92%)" }} />
-      <div className="pointer-events-none absolute inset-x-0 top-[28%] -z-10 h-px bg-linear-to-r from-transparent via-white/10 to-transparent" />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10"
+        style={{
+          backgroundImage: "radial-gradient(ellipse at 70% 50%, color-mix(in srgb, var(--theme-primary) 18%, transparent) 0%, transparent 65%), linear-gradient(color-mix(in srgb, var(--theme-primary) 3.5%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in srgb, var(--theme-primary) 3.5%, transparent) 1px, transparent 1px)",
+          backgroundSize: "auto, 56px 56px, 56px 56px",
+          maskImage: "radial-gradient(ellipse at 70% 50%, var(--text-white) 0%, transparent 70%)",
+          WebkitMaskImage: "radial-gradient(ellipse at 70% 50%, var(--text-white) 0%, transparent 70%)",
+        }}
+      />
 
-      <div className="relative z-10 mx-auto grid w-full max-w-[1500px] grid-cols-1 items-center gap-14 lg:grid-cols-[minmax(0,1.1fr)_minmax(390px,0.9fr)] xl:gap-20">
-        <div className="min-w-0">
+      <div className="hero-layout relative z-10 mx-auto grid w-full max-w-[1500px] grid-cols-1 items-center gap-14 overflow-visible lg:grid-cols-[minmax(0,1.1fr)_minmax(390px,0.9fr)] xl:gap-20">
+        <div className="hero-copy min-w-0 overflow-visible [container-type:inline-size]">
           <motion.div
-            initial={{ opacity: 0, x: -18 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.12, duration: 0.6 }}
-            className="mb-7 flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-[10px] uppercase tracking-[0.18em] text-slate-400 sm:text-xs"
+            {...entrance(0)}
+            className="availability-badge mb-7 inline-flex max-w-full items-center gap-3 rounded-full border px-4 py-2 font-mono text-[clamp(9px,1.6cqi,12px)] uppercase tracking-[0.18em]"
+            style={{
+              borderColor: "var(--glass-border)",
+              color: "var(--text-secondary)",
+            }}
           >
-            <span className="relative flex h-2.5 w-2.5">
+            <span className="relative flex h-2 w-2 shrink-0">
               <motion.span
-                animate={shouldReduceMotion ? undefined : { scale: [1, 1.8], opacity: [0.75, 0] }}
-                transition={{ duration: 1.7, repeat: shouldReduceMotion ? 0 : Infinity, ease: "easeOut" }}
-                className="absolute inset-0 rounded-full bg-emerald-400"
+                animate={shouldReduceMotion ? undefined : { opacity: [0.7, 0.15] }}
+                transition={{ duration: 2.4, repeat: shouldReduceMotion ? 0 : Infinity, ease: "easeInOut" }}
+                className="absolute inset-0 rounded-full border"
+                style={{ borderColor: "var(--theme-primary)" }}
               />
-              <span className="relative m-auto h-1.5 w-1.5 rounded-full bg-emerald-300" />
+              <span className="relative m-auto h-1.5 w-1.5 rounded-full" style={{ backgroundColor: "var(--theme-primary)" }} />
             </span>
-            Available for Freelance &amp; Full-time
-            <span className="text-slate-600">/</span>
-            Karachi, Pakistan
+            <span className="availability-copy min-w-0 whitespace-nowrap max-[767px]:whitespace-normal">
+              AVAILABLE FOR FREELANCE &amp; FULL-TIME · KARACHI, PAKISTAN
+            </span>
           </motion.div>
 
-          <h1 aria-label="Muhammad Irfan" className="font-display select-none font-extrabold leading-[0.82] text-white">
-            <span className="block overflow-hidden whitespace-nowrap pb-2 text-3xl max-[374px]:text-2xl sm:text-5xl md:text-6xl lg:text-4xl xl:text-6xl">
-              {firstName.split("").map((letter, index) => (
-                <motion.span key={`${letter}-${index}`} custom={index} variants={letterVariants} initial="hidden" animate="visible" className="inline-block">
-                  {letter}
-                </motion.span>
-              ))}
-            </span>
-            <span className="mt-1 block overflow-hidden whitespace-nowrap pb-3 text-3xl max-[374px]:text-2xl text-gradient sm:text-5xl md:text-6xl lg:text-4xl xl:text-5xl">
-              {lastName.split("").map((letter, index) => (
-                <motion.span key={`${letter}-${index}`} custom={index + firstName.length} variants={letterVariants} initial="hidden" animate="visible" className="inline-block">
-                  {letter}
-                </motion.span>
-              ))}
-              <motion.span
-                initial={{ scaleY: 0 }}
-                animate={{ scaleY: 1 }}
-                transition={{ delay: shouldReduceMotion ? 0 : 0.95, duration: 0.45 }}
-                className="ml-1 inline-block origin-bottom text-white"
-              >
-                .
-              </motion.span>
-            </span>
+          <h1
+            aria-label="Muhammad Irfan"
+            className="hero-name font-display select-none font-extrabold text-white"
+            style={{
+              whiteSpace: "nowrap",
+              overflowWrap: "normal",
+              wordBreak: "keep-all",
+              letterSpacing: "-0.01em",
+              lineHeight: 0.98,
+            }}
+          >
+            <motion.span
+              {...entrance(0.09)}
+              className="block whitespace-nowrap pb-1 leading-[0.98]"
+            >
+              {firstName}
+            </motion.span>
+            <motion.span
+              {...entrance(0.18)}
+              className="mt-1 block whitespace-nowrap pb-2 leading-[0.98]"
+              style={{ color: "var(--theme-primary)" }}
+            >
+              {lastName}.
+            </motion.span>
           </h1>
 
-          <motion.div
-            initial={{ scaleX: 0, opacity: 0 }}
-            animate={{ scaleX: 1, opacity: 1 }}
-            transition={{ delay: 0.95, duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-            className="mt-6 h-px w-24 origin-left sm:mt-8 sm:w-32"
+          <div
+            className="mt-6 h-px w-24 sm:mt-8 sm:w-32"
             style={{ backgroundColor: "var(--theme-primary)" }}
           />
 
-          <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.72, duration: 0.6 }}
-            className="mt-6 max-w-xl sm:mt-7"
+          <motion.p
+            {...entrance(0.27)}
+            className="mt-6 max-w-xl text-xl font-semibold leading-snug text-white sm:mt-7 sm:text-[1.625rem]"
           >
-            <p className="text-xl font-semibold leading-snug text-white sm:text-[1.625rem]">
-              Creative Front-End Developer <span style={{ color: "var(--theme-primary)" }}>&amp;</span> UI/UX Specialist
-            </p>
-            <p className="mt-2 text-base leading-relaxed text-slate-400 sm:text-lg">
-              Engineering high-performance web applications.
-            </p>
-          </motion.div>
+            Full-Stack Developer <span style={{ color: "var(--theme-primary)" }}>&amp;</span> Next.js Engineer
+          </motion.p>
+          <motion.p
+            {...entrance(0.36)}
+            className="mt-2 max-w-[520px] text-base leading-relaxed sm:text-lg"
+            style={{ color: "var(--text-tertiary, #9AA4B2)" }}
+          >
+            I build fast, secure, multi-role web apps with Next.js, TypeScript and Supabase.
+          </motion.p>
 
           <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.9, duration: 0.55 }}
-            className="mt-7 flex flex-wrap items-center gap-3 sm:mt-9"
+            {...entrance(0.45)}
+            className="hero-buttons mt-7 grid max-w-[520px] grid-cols-1 gap-3 min-[390px]:grid-cols-2 sm:mt-9"
           >
             <MagneticButton
               href="#projects"
               dataAttr
-              className="group flex min-h-12 items-center gap-3 border border-(--theme-primary) bg-(--theme-primary) px-5 text-sm font-semibold text-slate-950 shadow-lg shadow-cyan-500/15 transition duration-300 hover:-translate-y-0.5 hover:bg-white hover:shadow-xl sm:px-6"
+              className="hero-button hero-button--primary group flex w-full items-center justify-center gap-2 px-4 text-sm font-semibold sm:px-5"
             >
               <FolderKanban size={16} />
               Projects
@@ -393,49 +406,186 @@ export default function Hero() {
               target="_blank"
               rel="noopener noreferrer"
               dataAttr
-              className="flex min-h-12 items-center gap-2 border border-white/15 px-5 text-sm font-medium text-slate-200 transition-colors hover:border-white/40 hover:bg-white/5 sm:px-6"
+              className="hero-button hero-button--secondary flex w-full items-center justify-center gap-2 px-4 text-sm font-medium sm:px-5"
             >
               <FileText size={16} style={{ color: "var(--theme-primary)" }} />
               View Resume
             </MagneticButton>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.15, duration: 0.6 }}
-            className="mt-8 flex items-center gap-5 border-t border-white/10 pt-5 sm:mt-10"
-          >
-            {[
-              { icon: LinkedinIcon, href: "https://linkedin.com/in/muhammad-irfan99", label: "LinkedIn" },
-              { icon: Globe, href: "https://muhammad-irfan-ivpl2jb.gamma.site", label: "Live Web" },
-              { icon: Mail, href: "https://mail.google.com/mail/?view=cm&fs=1&to=irfan.sfdev@gmail.com", label: "Email" },
-              { icon: Phone, href: "tel:+923412061108", label: "Phone" },
-            ].map((item) => {
-              const isExternal = item.href.startsWith("http");
-              return (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  target={isExternal ? "_blank" : "_self"}
-                  rel={isExternal ? "noreferrer" : undefined}
-                  data-cursor-hover
-                  aria-label={item.label}
-                  title={item.label}
-                  className="text-slate-500 transition-colors hover:text-white"
-                >
-                  <item.icon size={17} />
-                </a>
-              );
-            })}
-            <a href="#skills" className="ml-auto flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.14em] text-slate-500 transition-colors hover:text-white sm:text-[10px]">
-              Scroll to explore <ArrowDown size={13} />
-            </a>
-          </motion.div>
         </div>
 
-        <ProjectShowcase />
+        <OrbitStack />
+
+        <motion.div
+          {...entrance(0.54)}
+          className="hero-social mt-8 flex items-center gap-5 border-t border-white/10 pt-5 sm:mt-10"
+        >
+          {[
+            { icon: GithubIcon, href: "https://github.com/irfansfdev", label: "GitHub" },
+            { icon: LinkedinIcon, href: "https://linkedin.com/in/muhammad-irfan99", label: "LinkedIn" },
+            { icon: Mail, href: "mailto:irfan.sfdev@gmail.com", label: "Email" },
+            { icon: Phone, href: "tel:+923412061104", label: "Phone" },
+          ].map((item) => (
+            <a
+              key={item.label}
+              href={item.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-cursor-hover
+              aria-label={item.label}
+              title={item.label}
+              className="hero-social-link text-slate-400 transition-colors duration-150 ease-in-out hover:text-(--theme-primary)"
+            >
+              <item.icon size={22} />
+            </a>
+          ))}
+          <a href="#skills" className="hero-scroll ml-auto flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.14em] text-slate-500 transition-colors hover:text-(--theme-primary) sm:text-[10px]">
+            Scroll to explore <ArrowDown size={13} />
+          </a>
+        </motion.div>
       </div>
+      <style>{`
+        #home .hero-name {
+          font-size: clamp(2.75rem, 16.4cqi, 9rem);
+          line-height: 0.98;
+          transform: scaleX(0.54);
+          transform-origin: left center;
+          white-space: nowrap;
+        }
+
+        #home .hero-button {
+          position: relative;
+          min-height: 48px;
+          overflow: hidden;
+          isolation: isolate;
+          border-radius: 12px;
+          transform: translate(var(--magnetic-x, 0px), var(--magnetic-y, 0px));
+          transition: transform 200ms ease;
+        }
+
+        #home .hero-button::before {
+          position: absolute;
+          z-index: -1;
+          inset: 0;
+          border-radius: inherit;
+          background: color-mix(in srgb, var(--theme-primary) 18%, transparent);
+          content: "";
+          opacity: 0;
+          transition: opacity 200ms ease;
+        }
+
+        #home .hero-button:hover {
+          transform: translate(var(--magnetic-x, 0px), calc(var(--magnetic-y, 0px) - 2px));
+        }
+
+        #home .hero-button:hover::before {
+          opacity: 1;
+        }
+
+        #home .hero-button:focus-visible {
+          outline: 2px solid var(--theme-primary);
+          outline-offset: 3px;
+        }
+
+        #home .hero-button--primary {
+          border: 1px solid var(--theme-primary);
+          background: var(--theme-primary);
+          box-shadow: 0 6px 18px color-mix(in srgb, var(--theme-primary) 15%, transparent);
+          color: var(--theme-bg-darkest);
+        }
+
+        #home .hero-button--secondary {
+          border: 1px solid var(--glass-border);
+          background: var(--theme-bg-darkest);
+          color: var(--text-primary);
+        }
+
+        @media (min-width: 1024px) {
+          #home .hero-layout {
+            grid-template-areas: "copy visual" "social visual";
+            grid-template-columns: minmax(0, 1.1fr) minmax(390px, 0.9fr);
+            grid-template-rows: auto auto;
+            column-gap: clamp(3rem, 5vw, 5rem);
+            row-gap: 0;
+          }
+
+          #home .hero-copy {
+            grid-area: copy;
+          }
+
+          #home .orbit-stack {
+            grid-area: visual;
+            grid-row: 1 / span 2;
+          }
+
+          #home .hero-social {
+            grid-area: social;
+          }
+        }
+
+        @media (max-width: 1023px) {
+          #home .hero-layout {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 0;
+          }
+
+          #home .hero-social {
+            order: 3;
+          }
+
+          #home .orbit-stack {
+            order: 2;
+            margin-top: 32px;
+          }
+        }
+
+        @media (max-width: 767px) {
+          #home.hero-section {
+            min-height: auto;
+            align-items: flex-start;
+            overflow-x: clip;
+            padding-top: 80px;
+            padding-bottom: 48px;
+          }
+
+          #home .hero-copy {
+            width: 100%;
+          }
+
+          #home .availability-badge {
+            align-items: flex-start;
+            line-height: 1.7;
+          }
+
+          #home .availability-copy {
+            white-space: normal;
+          }
+
+          #home .hero-buttons {
+            grid-template-columns: minmax(0, 1fr);
+          }
+
+          #home .hero-social {
+            width: 100%;
+            gap: 8px;
+          }
+
+          #home .hero-social-link {
+            display: grid;
+            width: 44px;
+            height: 44px;
+            flex: 0 0 44px;
+            place-items: center;
+          }
+
+          #home .hero-scroll {
+            display: none;
+          }
+        }
+      `}</style>
     </section>
   );
 }
