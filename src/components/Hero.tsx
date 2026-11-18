@@ -402,7 +402,7 @@ export default function Hero() {
               <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
             </MagneticButton>
             <MagneticButton
-              href="/Muhammad_Irfan_Resume.pdf"
+              href="/Muhammad_Irfan_CV.pdf"
               target="_blank"
               rel="noopener noreferrer"
               dataAttr
