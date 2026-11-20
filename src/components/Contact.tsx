@@ -50,12 +50,12 @@ export default function Contact() {
       <div className="pointer-events-none absolute left-1/2 top-0 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-gradient-to-br from-cyan-500/10 via-violet-600/10 to-transparent blur-[120px]" />
 
       <div className="relative z-10 mx-auto max-w-5xl">
-        <div className="text-center">
+        <div className="text-left">
           <span className="font-mono text-xs uppercase tracking-[0.3em] text-violet-400">/ 06 — Contact</span>
-          <h2 className="font-display mt-3 text-[2.5rem] font-bold text-white sm:text-[4rem]">
+          <h2 className="section-heading">
             Let's build something <span className="text-gradient">unforgettable.</span>
           </h2>
-          <p className="mx-auto mt-4 max-w-lg text-base text-slate-400 sm:text-lg">
+          <p className="mt-4 max-w-lg text-base text-slate-400 sm:text-lg">
             Open to freelance engagements and full-time opportunities. Drop a message or reach out directly.
           </p>
         </div>

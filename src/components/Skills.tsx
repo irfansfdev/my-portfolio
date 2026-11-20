@@ -92,7 +92,7 @@ export default function Skills() {
       <div className="mx-auto max-w-[1500px] px-5 md:px-10">
         <div className="mb-8 max-w-3xl md:mb-16">
           <div className="font-mono text-xs uppercase tracking-[0.3em] text-yellow-400">/ 02 — Toolkit</div>
-          <h2 className="font-display mt-4 text-[2.5rem] font-bold tracking-tight text-white sm:text-[4rem]">
+          <h2 className="section-heading">
             My full-stack toolkit.
           </h2>
           <p className="mt-5 max-w-2xl text-base leading-relaxed text-slate-400 sm:text-lg">

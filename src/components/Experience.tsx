@@ -196,7 +196,7 @@ export default function Experience() {
         <div className="mb-10 flex flex-col gap-6 md:mb-14 md:flex-row md:items-end md:justify-between">
           <div>
             <div className="font-mono text-xs uppercase tracking-[0.3em]" style={{ color: "var(--theme-primary)" }}>/ 04 — Experience</div>
-            <h2 className="font-display mt-4 text-[2.5rem] font-bold tracking-tight text-white sm:text-[3.25rem] md:text-[4rem]">Experience in motion.</h2>
+            <h2 className="section-heading">Experience in motion.</h2>
               <p className="mt-4 max-w-2xl text-lg leading-relaxed text-slate-400 md:text-xl">
               Internship experience and hands-on trainee projects, organized by the work and skills behind them.
             </p>

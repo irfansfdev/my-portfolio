@@ -353,7 +353,7 @@ export default function Projects() {
       <div className="mx-auto mb-9 flex max-w-[1500px] flex-col gap-5 sm:mb-12 md:flex-row md:items-end md:justify-between">
         <div>
           <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-cyan-400 sm:text-xs">/ 05 — Selected Work</span>
-          <h2 className="font-display mt-3 text-[2.5rem] font-bold text-white sm:text-[4rem]">
+          <h2 className="section-heading">
             Projects you can <span className="text-gradient">touch.</span>
           </h2>
           <p className="mt-3 max-w-2xl text-base leading-relaxed text-slate-400 sm:text-lg">

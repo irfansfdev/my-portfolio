@@ -377,8 +377,11 @@ export default function Hero() {
           </h1>
 
           <div
-            className="mt-6 h-px w-24 sm:w-32"
-            style={{ backgroundColor: "var(--hero-accent)" }}
+            className="mt-6 h-[2px] w-28 rounded-full sm:w-36"
+            style={{
+              background: "linear-gradient(90deg, var(--hero-accent), transparent)",
+              boxShadow: "0 0 16px color-mix(in srgb, var(--hero-accent) 42%, transparent)",
+            }}
           />
 
           <motion.p
@@ -470,6 +473,13 @@ export default function Hero() {
           color: var(--text-white);
         }
 
+        #home .availability-badge {
+          background: color-mix(in srgb, var(--theme-bg-darker) 72%, transparent);
+          box-shadow: inset 0 1px rgba(255,255,255,.035), 0 8px 24px rgba(0,0,0,.12);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+        }
+
         #home .hero-name-theme {
           color: var(--theme-primary);
         }
@@ -526,8 +536,9 @@ export default function Hero() {
 
         #home .hero-button--secondary {
           border: 1px solid color-mix(in srgb, var(--hero-accent) 38%, transparent);
-          background: var(--theme-bg-darkest);
+          background: color-mix(in srgb, var(--theme-bg-darker) 72%, transparent);
           color: var(--text-primary);
+          backdrop-filter: blur(10px);
         }
 
         #home .hero-social-link:hover,
@@ -538,9 +549,9 @@ export default function Hero() {
         @media (min-width: 1024px) {
           #home .hero-layout {
             grid-template-areas: "copy visual" "social visual";
-            grid-template-columns: minmax(0, 1.1fr) minmax(390px, 0.9fr);
+            grid-template-columns: minmax(0, 1.08fr) minmax(420px, 0.92fr);
             grid-template-rows: auto auto;
-            column-gap: clamp(3rem, 5vw, 5rem);
+            column-gap: clamp(1.5rem, 3vw, 2.75rem);
             row-gap: 0;
           }
 
@@ -596,10 +607,6 @@ export default function Hero() {
 
           #home .availability-copy {
             white-space: normal;
-          }
-
-          #home .hero-buttons {
-            grid-template-columns: minmax(0, 1fr);
           }
 
           #home .hero-social {
