@@ -11,9 +11,15 @@ export default function CustomCursor() {
   const ringY = useSpring(mouseY, { damping: 25, stiffness: 250, mass: 0.5 });
 
   const raf = useRef<number | undefined>(undefined);
+  const hasMoved = useRef(false);
 
   useEffect(() => {
     const move = (e: MouseEvent) => {
+      if (!hasMoved.current) {
+        ringX.jump(e.clientX);
+        ringY.jump(e.clientY);
+        hasMoved.current = true;
+      }
       setHidden(false);
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
@@ -28,7 +34,7 @@ export default function CustomCursor() {
       document.removeEventListener("mouseleave", leave);
       if (raf.current) cancelAnimationFrame(raf.current);
     };
-  }, [mouseX, mouseY]);
+  }, [mouseX, mouseY, ringX, ringY]);
 
   return (
     <div className={`pointer-events-none fixed inset-0 z-[100] hidden md:block ${hidden ? "opacity-0" : "opacity-100"} transition-opacity duration-300`}>

@@ -99,7 +99,7 @@ const featuredProjects = [
   },
 ];
 
-function ProjectShowcase() {
+export function ProjectShowcase() {
   const [activeIndex, setActiveIndex] = useState(0);
   const shouldReduceMotion = useReducedMotion();
   const tiltX = useSpring(useMotionValue(0), { stiffness: 120, damping: 18, mass: 0.4 });
@@ -306,7 +306,7 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="hero-section relative isolate flex min-h-[100svh] w-full items-center overflow-visible px-5 pb-16 pt-[104px] sm:px-8 sm:pt-[108px] md:px-10 md:pb-24 md:pt-[108px]"
+      className="hero-section relative isolate flex min-h-[100svh] w-full items-center overflow-visible px-5 pb-20 pt-[104px] sm:px-8 sm:pt-[108px] md:px-10 md:pb-28 md:pt-[108px]"
     >
       <div
         aria-hidden="true"
@@ -323,9 +323,9 @@ export default function Hero() {
         <div className="hero-copy min-w-0 overflow-visible [container-type:inline-size]">
           <motion.div
             {...entrance(0)}
-            className="availability-badge mb-7 inline-flex max-w-full items-center gap-3 rounded-full border px-4 py-2 font-mono text-[clamp(9px,1.6cqi,12px)] uppercase tracking-[0.18em]"
+            className="availability-badge mb-6 inline-flex max-w-full items-center gap-3 rounded-full border px-4 py-2 font-mono text-[clamp(9px,1.6cqi,12px)] uppercase tracking-[0.12em]"
             style={{
-              borderColor: "var(--glass-border)",
+              borderColor: "color-mix(in srgb, var(--hero-accent) 30%, transparent)",
               color: "var(--text-secondary)",
             }}
           >
@@ -334,9 +334,14 @@ export default function Hero() {
                 animate={shouldReduceMotion ? undefined : { opacity: [0.7, 0.15] }}
                 transition={{ duration: 2.4, repeat: shouldReduceMotion ? 0 : Infinity, ease: "easeInOut" }}
                 className="absolute inset-0 rounded-full border"
-                style={{ borderColor: "var(--theme-primary)" }}
+                style={{ borderColor: "var(--hero-accent)" }}
               />
-              <span className="relative m-auto h-1.5 w-1.5 rounded-full" style={{ backgroundColor: "var(--theme-primary)" }} />
+              <motion.span
+                animate={shouldReduceMotion ? undefined : { scale: [1, 1.3, 1], opacity: [1, 0.75, 1] }}
+                transition={{ duration: 2.4, repeat: shouldReduceMotion ? 0 : Infinity, ease: "easeInOut" }}
+                className="relative m-auto h-1.5 w-1.5 rounded-full"
+                style={{ backgroundColor: "var(--hero-accent)" }}
+              />
             </span>
             <span className="availability-copy min-w-0 whitespace-nowrap max-[767px]:whitespace-normal">
               AVAILABLE FOR FREELANCE &amp; FULL-TIME · KARACHI, PAKISTAN
@@ -356,13 +361,15 @@ export default function Hero() {
           >
             <motion.span
               {...entrance(0.09)}
-              className="block whitespace-nowrap pb-1 leading-[0.98]"
+              className="block whitespace-nowrap leading-[0.9]"
             >
-              {firstName}
+              <span className="hero-name-theme">{firstName.slice(0, 4)}</span>
+              <span className="hero-name-split-letter">{firstName.slice(4, 5)}</span>
+              {firstName.slice(5)}
             </motion.span>
             <motion.span
               {...entrance(0.18)}
-              className="mt-1 block whitespace-nowrap pb-2 leading-[0.98]"
+              className="block whitespace-nowrap leading-[0.9]"
               style={{ color: "var(--theme-primary)" }}
             >
               {lastName}.
@@ -370,27 +377,26 @@ export default function Hero() {
           </h1>
 
           <div
-            className="mt-6 h-px w-24 sm:mt-8 sm:w-32"
-            style={{ backgroundColor: "var(--theme-primary)" }}
+            className="mt-6 h-px w-24 sm:w-32"
+            style={{ backgroundColor: "var(--hero-accent)" }}
           />
 
           <motion.p
             {...entrance(0.27)}
-            className="mt-6 max-w-xl text-xl font-semibold leading-snug text-white sm:mt-7 sm:text-[1.625rem]"
+            className="mt-6 max-w-xl text-[1.25rem] font-semibold leading-snug text-white sm:text-[1.8rem]"
           >
-            Full-Stack Developer <span style={{ color: "var(--theme-primary)" }}>&amp;</span> Next.js Engineer
+            Full-Stack Developer <span style={{ color: "var(--hero-accent)" }}>&amp;</span> Next.js Engineer
           </motion.p>
           <motion.p
             {...entrance(0.36)}
-            className="mt-2 max-w-[520px] text-base leading-relaxed sm:text-lg"
-            style={{ color: "var(--text-tertiary, #9AA4B2)" }}
+            className="mt-3 max-w-[520px] text-lg leading-relaxed text-(--text-secondary) sm:text-xl"
           >
             I build fast, secure, multi-role web apps with Next.js, TypeScript and Supabase.
           </motion.p>
 
           <motion.div
             {...entrance(0.45)}
-            className="hero-buttons mt-7 grid max-w-[520px] grid-cols-1 gap-3 min-[390px]:grid-cols-2 sm:mt-9"
+            className="hero-buttons mt-6 grid max-w-[520px] grid-cols-1 gap-3 min-[390px]:grid-cols-2"
           >
             <MagneticButton
               href="#projects"
@@ -408,7 +414,7 @@ export default function Hero() {
               dataAttr
               className="hero-button hero-button--secondary flex w-full items-center justify-center gap-2 px-4 text-sm font-medium sm:px-5"
             >
-              <FileText size={16} style={{ color: "var(--theme-primary)" }} />
+              <FileText size={16} style={{ color: "var(--hero-accent)" }} />
               View Resume
             </MagneticButton>
           </motion.div>
@@ -446,12 +452,35 @@ export default function Hero() {
         </motion.div>
       </div>
       <style>{`
+        #home {
+          --hero-accent: var(--theme-primary);
+        }
+
+        #home.hero-section {
+          background: radial-gradient(ellipse at 74% 48%, color-mix(in srgb, var(--hero-accent) 8%, transparent), transparent 48%);
+        }
+
         #home .hero-name {
-          font-size: clamp(2.75rem, 16.4cqi, 9rem);
-          line-height: 0.98;
-          transform: scaleX(0.54);
+          font-size: clamp(4rem, 18cqi, 11rem);
+          line-height: 0.9;
+          width: max-content;
+          transform: scaleX(0.45);
           transform-origin: left center;
           white-space: nowrap;
+          color: var(--text-white);
+        }
+
+        #home .hero-name-theme {
+          color: var(--theme-primary);
+        }
+
+        #home .hero-name-split-letter {
+          display: inline-block;
+          background: linear-gradient(90deg, var(--theme-primary) 0 50%, var(--text-white) 50% 100%);
+          background-clip: text;
+          -webkit-background-clip: text;
+          color: transparent;
+          -webkit-text-fill-color: transparent;
         }
 
         #home .hero-button {
@@ -469,7 +498,7 @@ export default function Hero() {
           z-index: -1;
           inset: 0;
           border-radius: inherit;
-          background: color-mix(in srgb, var(--theme-primary) 18%, transparent);
+          background: color-mix(in srgb, var(--hero-accent) 18%, transparent);
           content: "";
           opacity: 0;
           transition: opacity 200ms ease;
@@ -484,21 +513,26 @@ export default function Hero() {
         }
 
         #home .hero-button:focus-visible {
-          outline: 2px solid var(--theme-primary);
+          outline: 2px solid var(--hero-accent);
           outline-offset: 3px;
         }
 
         #home .hero-button--primary {
-          border: 1px solid var(--theme-primary);
-          background: var(--theme-primary);
-          box-shadow: 0 6px 18px color-mix(in srgb, var(--theme-primary) 15%, transparent);
+          border: 1px solid var(--hero-accent);
+          background: var(--hero-accent);
+          box-shadow: 0 6px 24px color-mix(in srgb, var(--hero-accent) 27%, transparent);
           color: var(--theme-bg-darkest);
         }
 
         #home .hero-button--secondary {
-          border: 1px solid var(--glass-border);
+          border: 1px solid color-mix(in srgb, var(--hero-accent) 38%, transparent);
           background: var(--theme-bg-darkest);
           color: var(--text-primary);
+        }
+
+        #home .hero-social-link:hover,
+        #home .hero-scroll:hover {
+          color: var(--hero-accent);
         }
 
         @media (min-width: 1024px) {

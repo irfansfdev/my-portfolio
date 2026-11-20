@@ -42,7 +42,7 @@ const PILLS: OrbitPill[] = [
   {
     label: "TypeScript",
     angle: 200,
-    radiusRatio: 0.5,
+    radiusRatio: 0.34,
     tooltip: "Used in BabulShop",
     project: "BabulShop",
   },
@@ -84,6 +84,8 @@ const RINGS = [
   { id: 2, duration: "110s", direction: "counterclockwise", delay: "120ms" },
   { id: 3, duration: "140s", direction: "clockwise", delay: "240ms" },
 ];
+
+const SPARKS = [12, 68, 132, 194, 248, 314];
 
 function getPillPosition(pill: OrbitPill): CSSProperties {
   const radians = (pill.angle * Math.PI) / 180;
@@ -142,7 +144,6 @@ export default function OrbitStack() {
     const right = stageBounds.right - pillBounds.right;
     const left = pillBounds.left - stageBounds.left;
     const below = stageBounds.bottom - pillBounds.bottom;
-    const above = pillBounds.top - stageBounds.top;
 
     if (right >= tooltipWidth + gap) {
       setTooltipPlacement("right");
@@ -237,6 +238,22 @@ export default function OrbitStack() {
               >
                 <div className="orbit-geometry">
                   <div className={`orbit-circle orbit-circle--${ring.id}`} aria-hidden="true" />
+                  <div className={`orbit-ellipse-ring orbit-ellipse-ring--${ring.id}`} aria-hidden="true" />
+                  {ring.id === 1 && SPARKS.map((angle, index) => {
+                    const radians = (angle * Math.PI) / 180;
+                    return (
+                      <span
+                        key={angle}
+                        className="orbit-spark"
+                        aria-hidden="true"
+                        style={{
+                          left: `${50 + Math.cos(radians) * 47}%`,
+                          top: `${50 + Math.sin(radians) * 47}%`,
+                          animationDelay: `${index * -0.7}s`,
+                        }}
+                      />
+                    );
+                  })}
                 </div>
               </div>
             </div>
@@ -286,7 +303,15 @@ export default function OrbitStack() {
           </div>
 
           <div className="orbit-core-position">
-            <div className="orbit-core font-display">MI.</div>
+            <div className="orbit-reactor" aria-hidden="true">
+              <span className="orbit-reactor-ring orbit-reactor-ring--outer" />
+              <span className="orbit-reactor-ring orbit-reactor-ring--middle" />
+              <span className="orbit-reactor-ring orbit-reactor-ring--inner" />
+              <div className="orbit-reactor-face">
+                <div className="orbit-core font-display">MI.</div>
+                <span className="orbit-reactor-caption font-mono">CREATIVE ENGINE</span>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -317,9 +342,9 @@ export default function OrbitStack() {
       <style>{`
         .orbit-stack {
           --orbit-accent: var(--theme-primary);
+          --orbit-gold: var(--theme-primary-light);
           --orbit-background: var(--theme-bg-darkest);
           --orbit-surface: var(--theme-bg-darker);
-          --orbit-muted: var(--text-tertiary);
           --orbit-border: var(--glass-border);
           color: var(--text-white);
           min-width: 0;
@@ -330,7 +355,7 @@ export default function OrbitStack() {
           position: relative;
           container-type: inline-size;
           width: min(100%, 600px);
-          aspect-ratio: 1;
+          aspect-ratio: auto;
           margin-inline: auto;
         }
 
@@ -339,7 +364,8 @@ export default function OrbitStack() {
           isolation: isolate;
           --orbit-size: min(75cqi, 480px);
           width: 100%;
-          height: 100%;
+          height: auto;
+          aspect-ratio: 1;
           overflow: visible;
         }
 
@@ -390,20 +416,63 @@ export default function OrbitStack() {
         .orbit-circle--1 {
           width: 40%;
           height: 40%;
-          border: 1px solid color-mix(in srgb, var(--orbit-accent) 55%, transparent);
-          box-shadow: 0 0 32px color-mix(in srgb, var(--orbit-accent) 14%, transparent);
+          border: 1px solid color-mix(in srgb, var(--orbit-gold) 55%, transparent);
+          box-shadow: 0 0 32px color-mix(in srgb, var(--orbit-gold) 20%, transparent);
         }
 
         .orbit-circle--2 {
           width: 68%;
           height: 68%;
-          border: 1px dashed color-mix(in srgb, var(--orbit-accent) 35%, transparent);
+          border: 1px dashed color-mix(in srgb, var(--orbit-gold) 35%, transparent);
         }
 
         .orbit-circle--3 {
           width: 100%;
           height: 100%;
-          border: 1px dotted color-mix(in srgb, var(--orbit-accent) 20%, transparent);
+          border: 1px dotted color-mix(in srgb, var(--orbit-gold) 24%, transparent);
+        }
+
+        .orbit-ellipse-ring {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          border: 1px solid color-mix(in srgb, var(--orbit-gold) 62%, transparent);
+          border-radius: 50%;
+          box-shadow: 0 0 14px color-mix(in srgb, var(--orbit-gold) 13%, transparent);
+          transform: translate(-50%, -50%);
+        }
+
+        .orbit-ellipse-ring--1 {
+          width: 100%;
+          height: 34%;
+          transform: translate(-50%, -50%) rotate(28deg) rotateX(58deg);
+        }
+
+        .orbit-ellipse-ring--2 {
+          width: 94%;
+          height: 42%;
+          border-color: color-mix(in srgb, var(--orbit-gold) 42%, transparent);
+          border-style: dashed;
+          transform: translate(-50%, -50%) rotate(-32deg) rotateX(54deg);
+        }
+
+        .orbit-ellipse-ring--3 {
+          width: 108%;
+          height: 30%;
+          border-color: color-mix(in srgb, var(--orbit-gold) 30%, transparent);
+          transform: translate(-50%, -50%) rotate(72deg) rotateX(64deg);
+        }
+
+        .orbit-spark {
+          position: absolute;
+          z-index: 3;
+          width: 5px;
+          height: 5px;
+          border-radius: 50%;
+          background: var(--theme-primary-light);
+          box-shadow: 0 0 7px 2px color-mix(in srgb, var(--orbit-gold) 85%, transparent);
+          transform: translate(-50%, -50%);
+          animation: orbit-sparkle 2.8s ease-in-out infinite;
         }
 
         .orbit-constellation {
@@ -528,52 +597,99 @@ export default function OrbitStack() {
           transform: translate(-50%, -50%);
         }
 
-        .orbit-core {
+        .orbit-reactor {
           position: absolute;
           top: 50%;
           left: 50%;
           display: grid;
-          width: 26%;
+          width: 48%;
           aspect-ratio: 1;
           place-items: center;
           border-radius: 50%;
-          background: var(--orbit-accent);
-          box-shadow: 0 0 42px color-mix(in srgb, var(--orbit-accent) 30%, transparent);
-          color: var(--orbit-background);
-          font-size: clamp(22px, 5.4cqi, 33px);
-          font-weight: 800;
+          background: radial-gradient(circle, color-mix(in srgb, var(--orbit-gold) 22%, transparent) 0%, transparent 68%);
           transform: translate(-50%, -50%);
-          animation: orbit-core-pulse 4s ease-in-out 1.06s infinite;
+          animation: orbit-reactor-breathe 5s ease-in-out infinite;
+        }
+
+        .orbit-reactor-ring {
+          position: absolute;
+          border-radius: 50%;
+          pointer-events: none;
+        }
+
+        .orbit-reactor-ring--outer {
+          inset: 0;
+          border: 1px solid color-mix(in srgb, var(--orbit-gold) 74%, transparent);
+          box-shadow: inset 0 0 18px color-mix(in srgb, var(--orbit-gold) 12%, transparent), 0 0 24px color-mix(in srgb, var(--orbit-gold) 22%, transparent);
+          animation: orbit-reactor-spin 26s linear infinite;
+        }
+
+        .orbit-reactor-ring--middle {
+          inset: 7%;
+          border: 2px dashed color-mix(in srgb, var(--orbit-gold) 72%, transparent);
+          animation: orbit-reactor-spin-reverse 34s linear infinite;
+        }
+
+        .orbit-reactor-ring--inner {
+          inset: 16%;
+          border: 1px solid color-mix(in srgb, var(--orbit-gold) 55%, transparent);
+          box-shadow: 0 0 18px color-mix(in srgb, var(--orbit-gold) 26%, transparent);
+          animation: orbit-reactor-spin 20s linear infinite;
+        }
+
+        .orbit-reactor-face {
+          position: relative;
+          display: grid;
+          width: 66%;
+          height: 66%;
+          align-content: center;
+          justify-items: center;
+          gap: 5px;
+          border: 1px solid color-mix(in srgb, var(--orbit-gold) 55%, transparent);
+          border-radius: 50%;
+          background: radial-gradient(circle at 50% 35%, color-mix(in srgb, var(--orbit-accent) 24%, var(--orbit-surface)) 0%, var(--orbit-surface) 62%, var(--orbit-background) 100%);
+          box-shadow: inset 0 0 24px color-mix(in srgb, var(--orbit-gold) 24%, transparent), 0 0 28px color-mix(in srgb, var(--orbit-gold) 24%, transparent);
+        }
+
+        .orbit-core {
+          display: grid;
+          place-items: center;
+          color: var(--text-primary);
+          font-size: clamp(20px, 4.7cqi, 30px);
+          font-weight: 800;
+          line-height: 1;
+          text-shadow: 0 0 18px color-mix(in srgb, var(--orbit-gold) 58%, transparent);
+        }
+
+        .orbit-reactor-caption {
+          color: color-mix(in srgb, var(--orbit-gold) 72%, var(--text-primary));
+          font-size: clamp(5px, 1cqi, 7px);
+          letter-spacing: 0.18em;
+          white-space: nowrap;
         }
 
         .orbit-card-list {
-          position: absolute;
+          position: static;
           z-index: 10;
-          inset: 0;
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 16px;
+          width: min(100%, 540px);
+          margin: 16px auto 0;
           pointer-events: none;
         }
 
         .orbit-card-position {
-          position: absolute;
-          width: min(220px, 42cqi);
+          position: relative;
+          width: 100%;
           pointer-events: auto;
           animation: orbit-arrive 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
         }
 
-        .orbit-card-position--top-right {
-          top: 4%;
-          right: 0;
-        }
-
-        .orbit-card-position--bottom-left {
-          bottom: 4%;
-          left: 0;
-        }
-
         .orbit-card-float {
           position: relative;
-          min-height: 90px;
-          padding: 10px;
+          min-height: 100px;
+          padding: 12px;
           border: 1px solid var(--orbit-border);
           border-radius: 14px;
           background: var(--orbit-surface);
@@ -603,8 +719,8 @@ export default function OrbitStack() {
         .orbit-card-label {
           margin: 0;
           color: var(--orbit-accent);
-          font-size: 10px;
-          letter-spacing: 0.18em;
+          font-size: 11px;
+          letter-spacing: 0.14em;
           line-height: 1.5;
           text-transform: uppercase;
         }
@@ -612,15 +728,15 @@ export default function OrbitStack() {
         .orbit-card-title {
           margin: 0.35em 0;
           color: var(--text-white);
-          font-size: 18px;
+          font-size: 20px;
           font-weight: 700;
           line-height: 1.15;
         }
 
         .orbit-card-description {
           margin: 0;
-          color: var(--orbit-muted);
-          font-size: 11px;
+          color: var(--text-secondary);
+          font-size: 12px;
           line-height: 1.45;
         }
 
@@ -659,12 +775,35 @@ export default function OrbitStack() {
           }
         }
 
-        @keyframes orbit-core-pulse {
+        @keyframes orbit-reactor-spin {
+          to {
+            transform: rotate(360deg);
+          }
+        }
+
+        @keyframes orbit-reactor-spin-reverse {
+          to {
+            transform: rotate(-360deg);
+          }
+        }
+
+        @keyframes orbit-reactor-breathe {
           0%, 100% {
-            transform: translate(-50%, -50%) scale(1);
+            filter: brightness(0.94);
           }
           50% {
-            transform: translate(-50%, -50%) scale(1.04);
+            filter: brightness(1.16);
+          }
+        }
+
+        @keyframes orbit-sparkle {
+          0%, 100% {
+            opacity: 0.35;
+            scale: 0.7;
+          }
+          50% {
+            opacity: 1;
+            scale: 1.35;
           }
         }
 
@@ -769,9 +908,12 @@ export default function OrbitStack() {
           }
 
           .orbit-geometry,
-          .orbit-constellation-geometry,
           .orbit-core-position {
             left: 50%;
+          }
+
+          .orbit-constellation-geometry {
+            width: min(74cqi, 270px);
           }
 
           .orbit-pill {
@@ -835,7 +977,9 @@ export default function OrbitStack() {
           .orbit-rotating-layer,
           .orbit-constellation,
           .orbit-pill-counter,
-          .orbit-core,
+          .orbit-reactor,
+          .orbit-reactor-ring,
+          .orbit-spark,
           .orbit-card-float {
             animation: none !important;
           }
